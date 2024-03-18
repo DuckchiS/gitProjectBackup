@@ -22,7 +22,7 @@ public class WeatherController {
 	public String w(Model model) {											
 		//// 우리나라 공공 api ////										
 		//인코딩 인증키										
-		String API_KEY = "";										
+		String API_KEY = "0ZRbAEfDUSfc0WWrIkfMeJC2n4k0mnSsmWGTI%2BsRzusFSbNNFwRvhK%2B10q9GzXbrm44XVIlXNeKTiTlEvAnPiw%3D%3D";										
 		String API_URL = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList?numOfRows=10&pageNo=1&dateCd=DAY&startDt=20240304&endDt=20240304&stnIds=108&dataCd=ASOS&dataType=JSON&serviceKey=" + API_KEY;										
 				// * 주의 * https 아님 http 임. https 는 인증관련 복잡한 처리를 해야함.								
 		RestTemplate restTemplate = new RestTemplate();										

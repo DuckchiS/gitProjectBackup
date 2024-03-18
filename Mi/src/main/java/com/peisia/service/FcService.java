@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -24,11 +25,10 @@ import com.google.gson.JsonParser;
 
 @Service
 public class FcService {
-	private final String API_KEY = "";
+	private final String API_KEY = "test_d101652904df6b58ef540a48653d7217d23ee7ea22014742e2004f28b02dad90b11206025f65fce822c9f5402cb8b869";
 	private final String rank = "https://open.api.nexon.com/static/fconline/meta/division.json";
-	private final String baseUrl = "https://open.api.nexon.com/fconline";
 	
-	public void ouid(Model model, String word) {
+	public String ouid(String word) {
 		try {
 			String characterName1 = URLEncoder.encode(word, StandardCharsets.UTF_8);
 	        String urlString1 = "https://open.api.nexon.com/fconline/v1/id?nickname="+characterName1;
@@ -56,54 +56,73 @@ public class FcService {
 	        
 	        in1.close();
 	        System.out.println(response1.toString());
+	        String ouid = response1.toString();
+	        return ouid;
 		} catch(Exception e) {
 			System.out.println(e);
+			String error = e.toString();
+			return error;
 		}
 	}
 	
-	public void user(Model model, String word,HttpServletRequest request) {
+	public String baseUser(Model model,String word) {
 		try {
+			  String dataFromFirstApi = parseFirstApiResponse(ouid(word));
+	            model.addAttribute("ouid", dataFromFirstApi);
+	            
+		        String characterName2 = URLEncoder.encode(dataFromFirstApi, StandardCharsets.UTF_8);
+
+		        String urlString2 = "https://open.api.nexon.com/fconline/v1/user/basic?ouid=" + characterName2;
+		        URL url2 = new URL(urlString2);
+
+		        HttpURLConnection connection2 = (HttpURLConnection)url2.openConnection();
+		        connection2.setRequestMethod("GET");
+		        connection2.setRequestProperty("x-nxopen-api-key", API_KEY);
+
+		        int responseCode2 = connection2.getResponseCode();
+		        
+		        
+		        BufferedReader in2;
+		        if(responseCode2 == 200) {
+		          in2 = new BufferedReader(new InputStreamReader(connection2.getInputStream()));
+		        } else {
+		          in2 = new BufferedReader(new InputStreamReader(connection2.getErrorStream()));
+		        }
+
+		        String inputLine2;
+		        StringBuffer response2 = new StringBuffer();
+		        while ((inputLine2 = in2.readLine()) != null) {
+		          response2.append(inputLine2);
+		        }
+		        in2.close();
+		        
+			    Gson gson1 = new Gson();
+			    JsonObject jsonObject1 = gson1.fromJson(response2.toString(), JsonObject.class);
+			    int characterLevel = jsonObject1.get("level").getAsInt();
+			    String serverName = jsonObject1.get("nickname").getAsString();
+
+			    model.addAttribute("characterLevel", characterLevel);
+			    model.addAttribute("serverName", serverName);
+			    System.out.println(response2.toString());
+		        
+		        String nick = response2.toString();
+		        return nick;
+		} catch(Exception e) {
+			System.out.println(e);
+			String error = e.toString();
+			return error;
+		}
+	}
+	
+	public void user(Model model, String word) {
+		try {
+			ouid(word);
 			   // 첫 번째 API 응답을 파싱하여 필요한 데이터 추출
-            String dataFromFirstApi = parseFirstApiResponse(response1.toString());
+            String dataFromFirstApi = parseFirstApiResponse(ouid(word));
             model.addAttribute("ouid", dataFromFirstApi);
             
-	        String characterName2 = URLEncoder.encode(dataFromFirstApi, StandardCharsets.UTF_8);
-
-	        String urlString2 = "https://open.api.nexon.com/fconline/v1/user/basic?ouid=" + characterName2;
-	        URL url2 = new URL(urlString2);
-
-	        HttpURLConnection connection2 = (HttpURLConnection)url2.openConnection();
-	        connection2.setRequestMethod("GET");
-	        connection2.setRequestProperty("x-nxopen-api-key", API_KEY);
-
-	        int responseCode2 = connection2.getResponseCode();
-	        
-	        
-	        BufferedReader in2;
-	        if(responseCode2 == 200) {
-	          in2 = new BufferedReader(new InputStreamReader(connection2.getInputStream()));
-	        } else {
-	          in2 = new BufferedReader(new InputStreamReader(connection2.getErrorStream()));
-	        }
-
-	        String inputLine2;
-	        StringBuffer response2 = new StringBuffer();
-	        while ((inputLine2 = in2.readLine()) != null) {
-	          response2.append(inputLine2);
-	        }
-	        in2.close();
-	        
-	        Gson gson1 = new Gson();
-
-	        JsonObject jsonObject1 = gson1.fromJson(response2.toString(), JsonObject.class);
-
-	        int characterLevel = jsonObject1.get("level").getAsInt();
-	        String serverName = jsonObject1.get("nickname").getAsString();
-
-            model.addAttribute("characterLevel", characterLevel);
-            model.addAttribute("serverName", serverName);
-	        System.out.println(response2.toString());
-	        
+            baseUser(model, word);
+            
 		    String characterName3 = URLEncoder.encode(dataFromFirstApi, StandardCharsets.UTF_8);
 
 		    String urlString3 = "https://open.api.nexon.com/fconline/v1/user/maxdivision?ouid=" + characterName3;
@@ -129,9 +148,6 @@ public class FcService {
 		      }
 		      in3.close();
 		      
-		      
-		      Gson gson2 = new Gson();
-
 		      JsonArray jsonArray2 = JsonParser.parseString(response3.toString()).getAsJsonArray();
       
 		      for (JsonElement jsonElement : jsonArray2) {
@@ -206,70 +222,12 @@ public class FcService {
 	
 	public void match(Model model, String word,HttpServletRequest request) {
 		try {
-		    String characterName1 = URLEncoder.encode(word, StandardCharsets.UTF_8);
-		    String urlString1 = "https://open.api.nexon.com/fconline/v1/id?nickname=" + characterName1;
-		    URL url1 = new URL(urlString1);
-
-		    HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
-		    connection1.setRequestMethod("GET");
-		    connection1.setRequestProperty("x-nxopen-api-key", API_KEY);
-
-		    int responseCode1 = connection1.getResponseCode();
-		        
-		    BufferedReader in1;
-		    if (responseCode1 == 200) {
-		        in1 = new BufferedReader(new InputStreamReader(connection1.getInputStream()));
-		    } else {
-		        in1 = new BufferedReader(new InputStreamReader(connection1.getErrorStream()));
-		    }
-
-		    String inputLine1;
-		    StringBuffer response1 = new StringBuffer();
-		    while ((inputLine1 = in1.readLine()) != null) {
-		        response1.append(inputLine1);
-		    }
-		        
-		    in1.close();
-		    System.out.println(response1.toString());
-		        
-		    // 첫 번째 API 응답을 파싱하여 필요한 데이터 추출
-		    String dataFromFirstApi = parseFirstApiResponse(response1.toString());
+			ouid(word);
+		    String dataFromFirstApi = parseFirstApiResponse(ouid(word));
 		    model.addAttribute("ouid", dataFromFirstApi);
-		        
-		    String characterName2 = URLEncoder.encode(dataFromFirstApi, StandardCharsets.UTF_8);
-
-		    String urlString2 = "https://open.api.nexon.com/fconline/v1/user/basic?ouid=" + characterName2;
-		    URL url2 = new URL(urlString2);
-
-		    HttpURLConnection connection2 = (HttpURLConnection) url2.openConnection();
-		    connection2.setRequestMethod("GET");
-		    connection2.setRequestProperty("x-nxopen-api-key", API_KEY);
-
-		    int responseCode2 = connection2.getResponseCode();
-		            
-		    BufferedReader in2;
-		    if (responseCode2 == 200) {
-		        in2 = new BufferedReader(new InputStreamReader(connection2.getInputStream()));
-		    } else {
-		        in2 = new BufferedReader(new InputStreamReader(connection2.getErrorStream()));
-		    }
-
-		    String inputLine2;
-		    StringBuffer response2 = new StringBuffer();
-		    while ((inputLine2 = in2.readLine()) != null) {
-		        response2.append(inputLine2);
-		    }
-		    in2.close();
-		        
-		    Gson gson1 = new Gson();
-		    JsonObject jsonObject1 = gson1.fromJson(response2.toString(), JsonObject.class);
-		    int characterLevel = jsonObject1.get("level").getAsInt();
-		    String serverName = jsonObject1.get("nickname").getAsString();
-
-		    model.addAttribute("characterLevel", characterLevel);
-		    model.addAttribute("serverName", serverName);
-		    System.out.println(response2.toString());
-
+		    
+		    baseUser(model, word);
+		    
 		    String characterName = URLEncoder.encode(dataFromFirstApi, StandardCharsets.UTF_8);
 		    String urlString = "https://open.api.nexon.com/fconline/v1/user/match?ouid="+ characterName +"&matchtype=50&offset=0&limit=100";
 		    URL url = new URL(urlString);
@@ -303,8 +261,6 @@ public class FcService {
 			// JSON 배열 데이터를 문자열로 변환하여 모델에 추가
 		    model.addAttribute("matches", response.toString());
 	        model.addAttribute("ouid", dataFromFirstApi);
-	        model.addAttribute("characterLevel", characterLevel);
-	        model.addAttribute("serverName", serverName);
 	        model.addAttribute("matches", response.toString());
 		    System.out.println(response.toString());
 		} catch(Exception e) {
@@ -312,7 +268,8 @@ public class FcService {
 		}	
 	}
 	
-	public void matchDetail(Model model, String word,HttpServletRequest request) {
+	public void matchDetail(@RequestParam("jsonData") String jsonData,
+			@RequestParam("word")String word, Model model,HttpServletRequest request) {
 		try {
 		    String urlString = "https://open.api.nexon.com/fconline/v1/match-detail?matchid=" + jsonData;
 		    URL url = new URL(urlString);
@@ -340,72 +297,15 @@ public class FcService {
 		    }
 		    in.close();
 		    
-		    String characterName1 = URLEncoder.encode(word, StandardCharsets.UTF_8);
-		    String urlString1 = "https://open.api.nexon.com/fconline/v1/id?nickname=" + characterName1;
-		    URL url1 = new URL(urlString1);
-
-		    HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
-		    connection1.setRequestMethod("GET");
-		    connection1.setRequestProperty("x-nxopen-api-key", API_KEY);
-
-		    int responseCode1 = connection1.getResponseCode();
-		        
-		    BufferedReader in1;
-		    if (responseCode1 == 200) {
-		        in1 = new BufferedReader(new InputStreamReader(connection1.getInputStream()));
-		    } else {
-		        in1 = new BufferedReader(new InputStreamReader(connection1.getErrorStream()));
-		    }
-
-		    String inputLine1;
-		    StringBuffer response1 = new StringBuffer();
-		    while ((inputLine1 = in1.readLine()) != null) {
-		        response1.append(inputLine1);
-		    }
-		        
-		    in1.close();
-		    System.out.println(response1.toString());
+		    ouid(word);
 		        
 		    // 첫 번째 API 응답을 파싱하여 필요한 데이터 추출
-		    String dataFromFirstApi = parseFirstApiResponse(response1.toString());
+		    String dataFromFirstApi = parseFirstApiResponse(ouid(word));
 		    model.addAttribute("ouid", dataFromFirstApi);
 		        
-		    String characterName2 = URLEncoder.encode(dataFromFirstApi, StandardCharsets.UTF_8);
-
-		    String urlString2 = "https://open.api.nexon.com/fconline/v1/user/basic?ouid=" + characterName2;
-		    URL url2 = new URL(urlString2);
-
-		    HttpURLConnection connection2 = (HttpURLConnection) url2.openConnection();
-		    connection2.setRequestMethod("GET");
-		    connection2.setRequestProperty("x-nxopen-api-key", API_KEY);
-
-		    int responseCode2 = connection2.getResponseCode();
-		            
-		    BufferedReader in2;
-		    if (responseCode2 == 200) {
-		        in2 = new BufferedReader(new InputStreamReader(connection2.getInputStream()));
-		    } else {
-		        in2 = new BufferedReader(new InputStreamReader(connection2.getErrorStream()));
-		    }
-
-		    String inputLine2;
-		    StringBuffer response2 = new StringBuffer();
-		    while ((inputLine2 = in2.readLine()) != null) {
-		        response2.append(inputLine2);
-		    }
-		    in2.close();
-		        
-		    Gson gson1 = new Gson();
-		    JsonObject jsonObject1 = gson1.fromJson(response2.toString(), JsonObject.class);
-		    int characterLevel = jsonObject1.get("level").getAsInt();
-		    String serverName = jsonObject1.get("nickname").getAsString();
-
-		    model.addAttribute("characterLevel", characterLevel);
-		    model.addAttribute("serverName", serverName);
+		    baseUser(model, word);
 
 	        model.addAttribute("ouid", dataFromFirstApi);
-	        model.addAttribute("characterLevel", characterLevel);
-	        model.addAttribute("serverName", serverName);
 	        model.addAttribute("matches", response.toString());
 	        
 		    model.addAttribute("tests", response.toString());

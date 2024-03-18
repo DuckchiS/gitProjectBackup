@@ -1,0 +1,6 @@
+package com.peisia.util.inheritance;
+
+public class Sword extends Item{
+	int attack;
+
+}

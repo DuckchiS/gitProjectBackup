@@ -1,0 +1,5 @@
+package com.peisia.c.board.admin.post;
+
+public class ProcAdminBoardDelete {
+
+}

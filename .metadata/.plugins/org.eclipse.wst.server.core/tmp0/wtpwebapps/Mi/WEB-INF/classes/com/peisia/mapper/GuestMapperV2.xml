@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peisia.mapper.GuestMapperV2">
+	<select id="getList" resultType="com.peisia.spring.dto.GuestDtoV2">
+		select * from tableguest
+	</select>
+	<select id="read" resultType="com.peisia.spring.dto.GuestDtoV2">
+		select * from tableguest where bno = #{bno}
+	</select>
+	<delete id="del">
+		delete from tableguest where bno = #{bno}
+	</delete>
+	<insert id="write">
+		insert into tableguest (btext) values (#{btext})
+	</insert>
+	<update id="modify">
+		update tableguest set btext = #{btext} where bno = #{bno}
+	</update>
+</mapper>

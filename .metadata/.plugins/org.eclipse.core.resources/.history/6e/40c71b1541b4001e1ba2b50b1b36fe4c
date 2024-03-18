@@ -1,0 +1,7 @@
+package com.peisia.c.board.admin.post;
+
+public class ProcAdminBoardUpdate {
+	public static void run() {
+		
+	}
+}

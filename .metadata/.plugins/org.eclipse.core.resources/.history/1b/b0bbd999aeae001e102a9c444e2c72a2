@@ -1,0 +1,49 @@
+package Data;
+
+import java.util.ArrayList;
+
+import Util.Ci;
+import Util.Cw;
+
+
+public class Create {
+	public static ArrayList<Char> newChar = new ArrayList<>();
+	
+	public static int playerHp = 0;
+	public static int playerMaxHp = 0;
+	public static int playerMp = 0;
+	public static int playerMaxMp = 0;
+	public static int playerAtk = 0;
+	public static int playerDef = 0;
+	public static int playerExp = 0;
+	public static int playerMaxExp = 150;
+	public static int playerGold = 0;
+	public static int playerMap = 0;
+	public static int playerX = 0;
+	public static int playerY = 0;
+	public static int playerPoint = 0;
+	public static String playSkill = "";
+	public static String playerJob = "초보자";
+	
+	public void run() {
+		Cw.wn("😊:주인공 이름을 정해주세요.");
+		q:while(true) {
+			String cmd = Ci.r("입력");
+			if(cmd.contains(" ")) {
+				Cw.wn("공백 입력불가");
+				break;
+			}else {
+				if(cmd.length() < 10 && cmd.length() > 0) {
+					Char character = new Char(cmd,"F",1,0);
+					newChar.add(character);
+					Cw.wn("생성 완료");
+					break q;
+				} else {
+					Cw.wn("길이가 맞지않습니다.");
+				}
+			}
+			
+		}
+	}
+
+}

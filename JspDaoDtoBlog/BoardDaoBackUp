@@ -1,0 +1,200 @@
+package com.example.dc.jsp.board.dao;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import com.example.dc.db.DB;
+import com.example.dc.db.Dao;
+import com.example.dc.jsp.board.Board;
+import com.example.dc.jsp.board.dto.Dto;
+
+public class BoardDao extends Dao{
+	
+	public void del(String category, String no) {
+		super.connect();
+		String sql = String.format("delete from %s where no=%s and b_category like '%s'",
+				DB.Cat_Board3, no, category);
+		super.update(sql);
+		super.close();
+	}
+	
+	public void write(Dto d) {
+		super.connect();	
+		String sql = String.format("insert into %s (title,id,content) values ('%s','%s','%s')",
+				DB.Cat_Board3,d.title,d.id,d.content);
+		super.update(sql);
+		super.close();
+	}
+	
+	public Dto read(String no) {
+		Dto post = null;
+		super.connect();
+		try {
+			String sql = String.format("select * from %s where no=%s", 
+					DB.Cat_Board3,no);
+			System.out.println("================="+sql);
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			post = new Dto(
+					rs.getString("category"),
+					rs.getString("no"),
+					rs.getString("title"),
+					rs.getString("content"),
+					rs.getString("id"),
+					rs.getString("date_time"),
+					rs.getString("hit"),
+					rs.getString("reply_ori"),
+					rs.getString("reply_count")
+					);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		super.close();
+		return post;
+	}
+	
+	public int getCount() {
+		int count = 0;
+		super.connect();
+		try {
+			String sql = String.format("select count(*) from %s", DB.Cat_Board3);
+			System.out.println("====================="+sql);
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			count = rs.getInt("count(*)");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		super.close();
+		return count;
+	}
+	
+	public ArrayList<Dto> list(){
+		ArrayList<Dto> posts = new ArrayList<>();
+		super.connect();
+		try {
+//			int startIndex = ((Integer.parseInt(page)-1))*Board.List_Amount;
+			String sql = String.format("select * from %s ", DB.Cat_Board3);
+			System.out.println("=================="+sql);
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {
+				posts.add(new Dto(
+						rs.getString("no"),
+						rs.getString("title"),
+						rs.getString("content"),
+						rs.getString("id"),
+						rs.getString("hit"),
+						rs.getString("date_time"),
+						rs.getString("reply_ori"),
+						rs.getString("reply_count")
+						));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		super.close();
+		return posts;
+	}
+	
+	public ArrayList<Dto> list(String page){
+		ArrayList<Dto> posts = new ArrayList<>();
+		super.connect();
+		try {
+			int startIndex = ((Integer.parseInt(page)-1))*Board.List_Amount;
+			String sql = String.format("select * from %s limit %s,%s", DB.Cat_Board3,startIndex,Board.List_Amount);
+			System.out.println("=================="+sql);
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {
+				posts.add(new Dto(
+						rs.getString("no"),
+						rs.getString("title"),
+						rs.getString("content"),
+						rs.getString("id"),
+						rs.getString("hit"),
+						rs.getString("date_time"),
+						rs.getString("reply_ori"),
+						rs.getString("reply_count")
+						));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		super.close();
+		return posts;
+	}
+	
+	public int getSerachCount(String word) {
+		int count = 0;
+		super.connect();
+		try {
+			String sql = String.format("select count(*) from %s where title like '%%%s%%'",
+					DB.Cat_Board3,word);
+			System.out.println("======================"+sql);
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			count = rs.getInt("count(*)");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		super.close();
+		return count;
+	}
+	
+	public ArrayList<Dto> listSerach(String word, String page){
+		ArrayList<Dto> posts = new ArrayList<>();
+		super.connect();
+		try {
+			int startIndex = ((Integer.parseInt(page))-1)*Board.List_Amount;
+			String sql = String.format("select * from %s where title like '%%%s%%' limit %s,%s"
+					, DB.Cat_Board3,word,startIndex,Board.List_Amount);
+			System.out.println("=========================="+sql);
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {
+				posts.add(new Dto(
+						rs.getString("no"),
+						rs.getString("title"),
+						rs.getString("content"),
+						rs.getString("id"),
+						rs.getString("hit"),
+						rs.getString("date_time"),
+						rs.getString("reply_ori"),
+						rs.getString("reply_count")
+						));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		super.close();
+		return posts;
+	}
+	
+	public void edit(Dto d,String no) {
+		super.connect();
+		String sql = String.format("update %s set title='%s',content='%s' where no=%s",
+				DB.Cat_Board3,d.title,d.content,no);
+		super.update(sql);
+		super.close();
+	}
+	
+	public int getTotalPageCount() {
+		int totalPageCount = 0;
+		int count = getCount();
+		if(count % Board.List_Amount == 0) {
+			totalPageCount = count / Board.List_Amount;
+		} else {
+			totalPageCount = count / Board.List_Amount + 1;
+		}
+		return totalPageCount;
+	}
+	
+	public int getTotalSearchPageCount(String word) {
+		int totalPageCount = 0;
+		int count = getSerachCount(word);
+		if(count % Board.List_Amount == 0) {
+			totalPageCount = count / Board.List_Amount;
+		} else {
+			totalPageCount = count / Board.List_Amount + 1;
+		}
+		return totalPageCount;
+	}
+}

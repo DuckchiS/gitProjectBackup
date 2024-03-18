@@ -1,0 +1,9 @@
+package com.peisia.c.KioskV3.product;
+
+import com.peisia.c.KioskV3.Product;
+
+public class Products extends Product{
+	public Products(String xx, int yy) {
+		super(xx, yy);
+	}
+}

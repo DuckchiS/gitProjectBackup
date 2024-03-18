@@ -1,0 +1,14 @@
+package com.peisia.c.webBlogV1;
+
+import com.peisia.c.util.Cw;
+import com.peisia.c.webBlog.data.Data;
+import com.peisia.c.webBlog.data.Post;
+
+public class ProcMenuList {
+	public static void run() {
+		Cw.wn("게시글 목록 입니다.");
+		for(Post p : Data.post) {
+			p.infoForList();
+		}
+	}
+}

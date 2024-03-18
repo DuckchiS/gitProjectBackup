@@ -1,0 +1,28 @@
+$(function() {
+    // 클릭 이벤트 핸들러 추출하여 중복 제거
+    function fetchData(url, callback) {
+        $.get(url, function(data) {
+            callback(data);
+        }).fail(function(xhr, textStatus, errorThrown) {
+            console.error("Request failed:", textStatus, errorThrown);
+        });
+    }
+
+    // cat1 클릭 이벤트
+    $("#cat1").click(function() {
+        fetchData("/api/catOne", function(data) {
+            var name = data.name;
+            var age = data.age;
+            $("#cat1_area").text("이름:" + name + " 나이:" + age);
+        });
+    });
+
+    // cat2 클릭 이벤트
+    $("#cat2").click(function() {
+        fetchData("/api/catTwo", function(data) {
+            var name = data.name;
+            var age = data.age;
+            $("#cat2_area").text("이름:" + name + " 나이:" + age);
+        });
+    });
+});

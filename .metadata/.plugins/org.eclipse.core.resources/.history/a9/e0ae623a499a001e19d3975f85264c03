@@ -1,0 +1,10 @@
+package com.pay.java.lotto;
+
+public class LottoV2 {
+	public void random2() {
+		int userLotto[] = {5,15,23,25,34,45};
+		int comLotto[] = new int[6];
+		
+		
+	}
+}

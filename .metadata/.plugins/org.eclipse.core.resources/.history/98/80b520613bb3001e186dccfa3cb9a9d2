@@ -1,0 +1,11 @@
+package com.peisia.c.board;
+
+import com.peisia.c.board.post.ProcBoard;
+
+public class Main {
+	public static void main(String[] args) {
+		ProcBoard board = new ProcBoard();
+		board.run();
+	}
+}
+

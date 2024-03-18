@@ -1,0 +1,158 @@
+package com.peisia.c.dargers;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+import com.peisia.c.dargers.display.Display;
+
+public class ProcDargers {
+	Connection con = null;
+	Statement st = null;
+	ResultSet result = null;
+	void run() {
+		dbInit();
+		Display.showTitle();
+		Display.showMainMenu();
+		System.out.println("================================================================");
+		Scanner sc = new Scanner(System.in);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		
+		loop:
+		while(true) {
+			System.out.println("옵션을 선택하세요:");
+			String cmd = sc.next();
+			switch(cmd) {
+			case "1":
+				System.out.println("============================================");
+				System.out.println("================= 선수리스트 ==================");
+				System.out.println("============================================");
+				System.out.println("이름 생년월일 번호 포지션 부상");
+				try {
+					result = st.executeQuery("select * from la_dargers");
+					while(result.next()) {
+						String name = result.getString("p_name");
+						String birth = result.getString("p_birth");
+						String no = result.getString("p_number");
+						String position = result.getString("p_position");
+						String injury = result.getString("injury");
+						System.out.println(name + " " + birth + " " + no + " " + position + " " + injury);
+					}
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				break;
+			case "2":
+				System.out.println("선수 번호를 입력하세요:");
+				String no = sc.next();
+				String sql = "select * from la_dargers where p_number=" + no;
+				try {
+					result = st.executeQuery(sql);
+					result.next();
+					String name = result.getString("p_name");
+					String birth = result.getString("p_birth");
+					String position = result.getString("p_position");
+					String injury = result.getString("injury");
+					System.out.println("이름: " + name + " 생년월일: " + birth + " 포지션: " + position + " 부상: " + injury);
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+			case "3":
+				try {
+					System.out.println("등록할 선수이름을 입력하세요:");
+					String name = reader.readLine();
+					System.out.println("등록할 선수번호를 입력하세요:");
+					String number = sc.next();
+					System.out.println("등록할 선수 키를 입력하세요:");
+					String height = sc.next();
+					System.out.println("등록할 선수 몸무게를 입력하세요:");
+					String weight = sc.next();
+					System.out.println("등록할 선수 생년월일를 입력하세요:");
+					String birth = sc.next();
+					System.out.println("등록할 선수 포지션을 입력하세요:");
+					String position = sc.next();
+					System.out.println("등록할 선수가 받은 MVP 갯수를 입력하세요:");
+					String mvp = sc.next();
+					System.out.println("등록할 선수 부상 상태를 입력하세요:");
+					String injury = sc.next();
+					
+					dbExcuteUpdate("insert into la_dargers(p_name,p_number,p_height,p_weight,p_birth,p_position,mvp,injury) "
+							+ "values ('"+ name +"','"+number+"','"+height+"','"+weight+"','"+birth+"','"+position+"','"+mvp+"','"+injury+"')");
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+				break;
+			case "4":
+				System.out.println("방출할 선수 번호를 입력하세요:");
+				String delNo = sc.next();
+				String sql1 = "delete from la_dargers where p_number="+delNo;
+				dbExcuteUpdate(sql1);
+				break;
+			case "5":
+				System.out.println("수정할 선수번호를 입력하세요:");
+				String editNo = sc.next();
+				System.out.println("부상 정보를 수정해주세요:");
+				sc.nextLine();
+				String editInjury = sc.nextLine();
+				
+				
+				dbExcuteUpdate("update la_dargers set injury='"+editInjury+"' where p_number="+editNo);
+				break;
+			case "e":
+				System.out.println("프로그램을 종료합니다.");
+				break loop;
+			default:
+				System.out.println("옵션에 없습니다. 다시 입력하세요.");
+				break;
+			}
+		}
+	}
+	
+	private void dbInit() {
+		try {
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/major_league_baseball", "root", "root");
+			st = con.createStatement();
+		} catch(SQLException e) {
+			System.out.println("SQLException: " + e.getMessage());
+			System.out.println("SQLState: " + e.getSQLState());
+		}
+	}
+	private void dbExcuteQuery(String query) {
+		try {
+			result = st.executeQuery(query);
+			while(result.next()) {
+				String name = result.getString("p_name");
+				System.out.println(name);
+			}
+		} catch(SQLException e){
+			System.out.println("SQLException: " + e.getMessage());
+			System.out.println("SQLState: " + e.getSQLState());
+		}
+	}
+	private void dbExcuteUpdate(String query) {
+		try {
+			int resultCount = st.executeUpdate(query);
+			System.out.println("처리된 행 수:" + resultCount);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	private void dbPostCount() {
+		try {
+			result = st.executeQuery("select count(*) from la_dargers");
+			result.next();
+			String count = result.getString("count(*)");
+			System.out.println("선수 수: " + count);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
+

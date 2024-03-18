@@ -1,0 +1,54 @@
+package Main;
+
+import Data.Create;
+import DisPlay.display;
+import Util.Cw;
+
+public class Main {
+	public static void main(String[] args) {
+		display dis = new display();
+		Create cre = new Create();
+		ActionPage action = new ActionPage();
+		
+		dis.run();
+		cre.run();
+		
+		
+		setupCharacter();
+		action.actionrun();
+		
+	}
+	
+	public static void setupCharacter() {
+		int dice = 0;
+		dice = (int)(Math.random()*150 + 100);
+		Create.playerHp = dice;
+		Create.playerMaxHp = dice;
+		dice = (int)(Math.random()*15 + 10);
+		Create.playerAtk = dice;
+		dice = (int)(Math.random()*5 + 2);
+		Create.playerDef = dice;
+		Create.playerMp = 100;
+		Create.playerMaxMp = 100;
+		Create.playerExp = 0;
+		Create.playerMaxExp = 1;
+		Create.playerGold = 0;
+		Create.playerPoint = 0;
+		Create.playerJob = "초보자";
+	}
+	
+	public static void restartGame() {
+		Cw.wn("게임을 재시작합니다.");
+		MonsterRegen.group.clear();
+		ActionPage action = new ActionPage();
+		Create.newChar.get(0).lv = 5;
+		Create.newChar.get(0).rank = "F";		
+		Create.newChar.get(0).score = 0;		
+		Create.playerMap = 0;
+		Create.playerPoint = 0;
+		Create.playerJob = "초보자";
+		setupCharacter();
+		action.actionrun();
+	}
+
+}

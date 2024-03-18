@@ -1,0 +1,21 @@
+package com.peisia.c.KioskV3;
+
+public class Order {
+	public Product selectProduct;
+	int optionHotCold = 0;	//1.hot 2.cold
+	int optionDessert = 0; 	//1.plain 2.choco 3.cheese
+	
+	public Order(Product selectProduct) {
+		this.selectProduct = selectProduct;
+	}
+	
+	public Order(Product selectProduct, int optionHotCold) {
+		this.selectProduct = selectProduct;
+		this.optionHotCold = optionHotCold;
+	}
+	
+	public Order(int optionDessert, Product seleProduct) {
+		this.selectProduct = seleProduct;
+		this.optionDessert = optionDessert;
+	}
+}

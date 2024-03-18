@@ -1,0 +1,5 @@
+package com.peisia.c.board.member;
+
+public class ProcMemberLogin {
+
+}

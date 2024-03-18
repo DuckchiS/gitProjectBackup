@@ -1,0 +1,26 @@
+package com.peisia.c.board.shop;
+
+import com.peisia.c.board.util.DB;
+
+public class ProcS_List {
+	static int PER_PAGE = 3;
+	static int startIndex = 0;
+	static int currentPage = 1;
+	static int totalPage = 0;
+	static int count = 0;
+	static String cmd = "";
+	static boolean isSearchMode = false;	
+	
+	public static void run() {
+		count = DB.shopDBPostCount();
+		if(count % PER_PAGE > 0) {
+			totalPage = count / PER_PAGE + 1;
+		} else {
+			totalPage = count / PER_PAGE;
+		}
+	}
+	
+	public static void search() {
+		
+	}
+}

@@ -1,0 +1,28 @@
+  const API_KEY = "
+test_d101652904df6b58ef540a48653d7217d23ee7ea22014742e2004f28b02dad90b11206025f65fce822c9f5402cb8b869";
+  const userName = "덕치생치";
+  const urlString = "https://open.api.nexon.com/fconline/v1/id?nickname=" + userName;
+  const userOuid = "31fd72dd424558b65734a666f6c507c8";
+  const urlString2 = "https://open.api.nexon.com/fconline/v1/user/basic?ouid=" + userOuid;
+  
+  const answer = fetch(urlString, {
+      headers:{
+        "x-nxopen-api-key": API_KEY
+      }
+  })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error))
+  
+  console.log(answer)
+  
+  const answer2 = fetch(urlString2, {
+      headers:{
+        "x-nxopen-api-key": API_KEY
+      }
+  })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error))
+  
+  console.log(answer2)

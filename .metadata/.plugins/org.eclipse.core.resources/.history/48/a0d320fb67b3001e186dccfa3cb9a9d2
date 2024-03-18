@@ -1,0 +1,21 @@
+package com.peisia.c.board.shop;
+
+import java.util.Scanner;
+
+import com.peisia.c.board.shop.display.Display;
+import com.peisia.c.board.util.DB;
+
+public class ProcShop {
+	public static void run() {
+		Display.showTitle();
+		Display.showMainMenu();
+		DB.dbInit();
+		
+		Scanner sc = new Scanner(System.in);
+		loop:
+		while(true) {
+			System.out.println("옵션을 선택하세요:");
+			String cmd = sc.next();
+		}
+	}
+}

@@ -1,0 +1,15 @@
+package com.peisia.c.KioskV3;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class KioskObj {
+	public static ArrayList<Order> basket = new ArrayList<>();
+	public static ArrayList<Product> product = new ArrayList<>();
+	public static Scanner sc = new Scanner(System.in);
+	public static String cmd;
+	
+	public static void productLoad() {
+		product.add("아메리카노");
+	}
+}

@@ -1,0 +1,7 @@
+package com.peisia.c.board.admin.shop;
+
+public class ProcAdminShop {
+	public static void run() {
+		
+	}
+}

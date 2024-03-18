@@ -1,0 +1,15 @@
+package com.peisia.c.board.shop;
+
+import com.peisia.c.board.shop.display.Display;
+import com.peisia.c.board.util.DB;
+
+public class ProcS_Reply {
+	public static void list(int oriNo) {
+		Display.replyBar();
+		String sql = "select * from "+DB.Table_Shop+" where shop_ori_no"=oriNo;
+	}
+	
+	public static void write(int shop_reply_ori) {
+		
+	}
+}

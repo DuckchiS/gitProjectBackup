@@ -1,0 +1,10 @@
+package com.peisia.c.webBlog.data;
+
+import java.util.ArrayList;
+
+public class Data {
+	public static ArrayList<Post> post;
+	public static void loadData() {
+		post = new ArrayList<>();
+	}
+}

@@ -1,0 +1,58 @@
+package com.peisia.c.dargers;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class ProcDargers {
+	Connection con = null;
+	Statement st = null;
+	ResultSet result = null;
+	void run() {
+		dbInit();
+		
+	}
+	
+	private void dbInit() {
+		try {
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/board", "root", "root");
+			st = con.createStatement();
+		} catch(SQLException e) {
+			System.out.println("SQLException: " + e.getMessage());
+			System.out.println("SQLState: " + e.getSQLState());
+		}
+	}
+	private void dbExcuteQuery(String query) {
+		try {
+			result = st.executeQuery(query);
+			while(result.next()) {
+				String name = result.getString("p_name");
+				System.out.println(name);
+			}
+		} catch(SQLException e){
+			System.out.println("SQLException: " + e.getMessage());
+			System.out.println("SQLState: " + e.getSQLState());
+		}
+	}
+	private void dbExcuteUpdate(String query) {
+		try {
+			int resultCount = st.executeUpdate(query);
+			System.out.println("처리된 행 수:" + resultCount);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	private void dbPostCount() {
+		try {
+			result = st.executeQuery("select count(*) from la_dargers");
+			result.next();
+			String count = result.getString("count(*)");
+			System.out.println("선수 수: " + count);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
+

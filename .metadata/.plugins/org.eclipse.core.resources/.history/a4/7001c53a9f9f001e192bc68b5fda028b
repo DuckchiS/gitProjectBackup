@@ -1,0 +1,6 @@
+package com.peisia.c.webBlog.data;
+
+public class Post {
+	static public int no = 0;
+	
+}

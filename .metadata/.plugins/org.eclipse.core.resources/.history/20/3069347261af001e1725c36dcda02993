@@ -1,0 +1,18 @@
+package com.peisia.c.dargers;
+
+public class ProcDargers {
+	
+	void run() {
+		dbInit();
+	}
+	
+	private void dbInit() {
+		
+	}
+
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+}
+

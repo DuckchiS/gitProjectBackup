@@ -1,0 +1,12 @@
+package com.peisia.c.webBlogV1;
+
+import com.peisia.c.util.Ci;
+import com.peisia.c.util.Cw;
+
+public class ProcMenuDel {
+	public static void run() {
+		Cw.wn("게시글 삭제 입니다.");
+		String cmd = Ci.r("삭제 할 글번호를 입력하세요:");
+		
+	}
+}

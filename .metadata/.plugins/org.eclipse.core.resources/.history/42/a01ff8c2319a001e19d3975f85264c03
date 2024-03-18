@@ -1,0 +1,12 @@
+package com.pay.java.array;
+
+public class Main {
+	public static void main(String[] args) {
+		int comLotto[] = new int[6];
+		
+		for(int i = 0; i < comLotto.length; i++) {
+			comLotto[i] = (int)(Math.random() * 45 + 1);
+			System.out.println(comLotto[i]);
+		}
+	}
+}

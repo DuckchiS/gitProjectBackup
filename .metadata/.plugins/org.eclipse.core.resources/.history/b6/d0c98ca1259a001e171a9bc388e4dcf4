@@ -1,0 +1,76 @@
+package com.pay.java.rpc;
+
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		System.out.println("가위 바위 보를 입력하세요.");
+		
+		Scanner sc = new Scanner(System.in);
+		String userRpc = sc.next();
+		System.out.println("당신이 낸 것은: " + userRpc);
+		
+		//int r = (int)(Math.random() * n + 1); 1 ~ n까지 랜덤한 숫자를 뽑는다.
+		int r = (int)(Math.random() * 3 + 1);    
+		
+		String comRpc = "";
+		if(r == 1) {
+			comRpc = "가위";
+		}
+		
+		if(r == 2) {
+			comRpc = "바위";
+		}
+		
+		if(r == 3) {
+			comRpc = "보";
+		}
+		
+		System.out.println("컴퓨터가 " + comRpc +"를 냈습니다.");
+		
+		String result = "";
+		
+		if(userRpc.equals("가위")) {
+			if(comRpc.equals("가위")) {
+				
+			}
+			
+			if(comRpc.equals("바위")) {
+				
+			}
+
+			if(comRpc.equals("보")) {
+	
+			}
+		}
+		
+		if(userRpc.equals("바위")) {
+			if(comRpc.equals("가위")) {
+				
+			}
+			
+			if(comRpc.equals("바위")) {
+				
+			}
+
+			if(comRpc.equals("보")) {
+	
+			}
+		}
+		
+		if(userRpc.equals("보")) {
+			if(comRpc.equals("가위")) {
+				
+			}
+			
+			if(comRpc.equals("바위")) {
+				
+			}
+
+			if(comRpc.equals("보")) {
+	
+			}
+		}
+		
+	}
+}

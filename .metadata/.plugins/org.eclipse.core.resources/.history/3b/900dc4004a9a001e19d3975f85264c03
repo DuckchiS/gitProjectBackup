@@ -1,0 +1,29 @@
+package com.pay.java.lotto;
+
+public class Lotto {
+	public void random(){
+		int comLotto[] = new int[6];
+		int userLotto[] = new int[6];
+		int win = 0;
+		
+		for(int j = 0; j < userLotto.length; j++) {
+			userLotto[j] = (int)(Math.random() * 45 + 1);
+			System.out.println("유저" + userLotto[j]);
+		}
+		
+		for(int i = 0; i < comLotto.length; i++) {
+			comLotto[i] = (int)(Math.random() * 45 + 1);
+			System.out.println("컴퓨터" + comLotto[i]);
+		}
+		
+		for(int a = 0; a <= 5; a++) {
+			for(int b = 0; b <= 5; b++) {
+				if(userLotto[a] == comLotto[b]) {
+					win = win + 1;
+				}
+			}
+		}
+		System.out.println("맞춘 갯수: " + win + "개");
+		
+	}
+}

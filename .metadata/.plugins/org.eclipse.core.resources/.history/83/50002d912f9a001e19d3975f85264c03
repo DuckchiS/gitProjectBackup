@@ -1,0 +1,11 @@
+package com.pay.java.lotto;
+
+public class Main {
+	public static void main(String[] args) {
+		int n[] = new int[2];
+		n[0] = 1;
+		n[1] = 2;
+		System.out.println(n[0]);
+		System.out.println(n[1]);
+	}
+}

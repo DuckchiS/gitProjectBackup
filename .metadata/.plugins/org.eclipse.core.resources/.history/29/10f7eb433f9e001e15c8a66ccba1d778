@@ -1,0 +1,29 @@
+package com.peisia.c.KioskV3;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import com.peisia.c.KioskV3.product.Dessert;
+import com.peisia.c.KioskV3.product.Drink;
+import com.peisia.c.KioskV3.product.Products;
+
+public class KioskObj {
+	public static ArrayList<Order> basket = new ArrayList<>();
+	public static ArrayList<Product> product = new ArrayList<>();
+	public static Scanner sc = new Scanner(System.in);
+	public static String cmd;
+	
+	public static void productLoad() {
+		product.add(new Drink("아메리카노", 1500));
+		product.add(new Drink("초코라떼", 1500));
+		product.add(new Drink("바닐라라떼", 1500));
+		product.add(new Drink("주스", 1500));
+		
+		product.add(new Dessert("마카롱", 1500));
+		product.add(new Dessert("쿠키", 1500));
+		product.add(new Dessert("케잌", 1500));
+		
+		product.add(new Products("텀블러", 18000));
+		product.add(new Products("피규어", 18000));
+	}
+}

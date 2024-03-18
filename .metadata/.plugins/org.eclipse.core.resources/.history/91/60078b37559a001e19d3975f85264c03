@@ -1,0 +1,16 @@
+package com.pay.java.lotto;
+
+public class LottoV3 {
+	public void random3() {
+		int userLotto[] = new int[6];
+		int comLotto[] = new int[6];
+		int bouns = 0;
+		int win = 0;
+		String result = "";
+		
+		while(userLotto.length < 6) {
+			int player = (int)(Math.random() * 45 + 1);
+			if(!userLotto.in)
+		}
+	}
+}

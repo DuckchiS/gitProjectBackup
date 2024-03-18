@@ -1,0 +1,20 @@
+package com.peisia.c.board;
+
+import com.peisia.c.board.util.Ci;
+import com.peisia.c.board.util.DB;
+
+public class ProcRead {
+	public static void run() {
+		String readNo = Ci.r("읽을 글 번호를 입력하세요:");
+		try {
+			DB.result = DB.st.executeQuery("select * from javaboard where no="+readNo);
+			DB.result.next();
+			String title = DB.result.getString("b_title");
+			String content = DB.result.getString("b_text");
+			System.out.println("제목: "+title);
+			System.out.println("내용: "+content);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

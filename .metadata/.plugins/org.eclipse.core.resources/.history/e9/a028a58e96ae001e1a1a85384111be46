@@ -1,0 +1,87 @@
+package Main;
+
+import Data.Char;
+import Data.Create;
+import Data.MapData;
+import Data.Skill;
+import Util.Ci;
+import Util.Cw;
+
+public class ActionPage {
+	
+	public void actionrun() {
+		MonsterRegen regen = new MonsterRegen();
+		MapData.mapLoad();
+		String rank = "";
+		Cw.wn();
+		for(Char a:Create.newChar) {
+			a.charmaininfo();
+			rank = a.rank;
+		}
+		w:while(true) {
+			DeadCheck.heroDead();
+//			Cw.wn();
+//			Cw.wn("현재방:["+MapData.mapList.get(Create.playerMap).mapName+"]");
+			Cw.wn();
+			for(Char a:Create.newChar) {
+				a.charmap();
+			}
+			Cw.wn("[⌛:탐색 / 💖:휴식 / 🚶‍♀️:이동 / 🧑:상태창 / ✨:기술 / 💨:재시작]");
+			String cmd = Ci.rl("행동입력");
+			switch(cmd) {
+			case "탐색":
+				switch(Create.playerMap) {
+				case 4:
+					ActionVillageSearch.villageSearchRun();
+					break;
+				default:
+					int dice = (int)(Math.random()*10 + 1);
+					if(dice<5) {
+						regen.regenrun();
+						ActionSearch.battle();
+					}else {
+						Cw.wn();
+						Cw.wn("아무것도 없는듯하다..");
+					}
+					break;
+				}
+				break;
+			case "휴식":
+				ActionRest.restRun();
+				break;
+			case "이동":
+				ActionMove.moveRun();
+				break;
+			case "상태창":
+				if(rank.equals("F")) {
+					for(Char a:Create.newChar) {
+						a.charinfo();
+					}
+				}else {
+					ActionStatus.statusRun();
+				}
+				break;
+			case "기술":
+				for(Char a:Create.newChar) {
+					for(Skill skill:a.charSkillBag) {
+						if(a.charSkillBag.size() > 0) {
+							ActionSkillList.skillListRun();
+						}else {
+							Cw.wn("기술목록이 없습니다.");
+						}
+					}
+				}
+				break;
+			case "재시작":
+				Create.playerHp = 0;
+				break;
+			default:
+				Cw.wn();
+				Cw.wn("불가능한 행동입니다.");
+				break;
+			}
+		}
+		
+	}
+
+}

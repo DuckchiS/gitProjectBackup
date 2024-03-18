@@ -1,0 +1,11 @@
+package com.peisia.c.board.shop;
+
+public class ProcS_Reply {
+	public static void list(int oriNo) {
+		
+	}
+	
+	public static void write(int shop_oriNo) {
+		
+	}
+}

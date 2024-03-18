@@ -1,0 +1,53 @@
+<%@page import="com.google.gson.JsonElement"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="com.google.gson.JsonArray"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/resources/fconline.css" >
+<meta charset="UTF-8">
+<title>공식경기전적</title>
+</head>
+<body>
+<div class="title-box">
+    피파 
+</div>
+<a href="/">처음으로가기</a>
+<hr>
+유저: ${serverName}
+<form action="/fconline/match" method="post">
+    <input name="word">
+    <input type="submit" value="검색">
+</form>
+<hr>
+최근 전적<br>
+<script>
+// JSON 형식의 문자열 파싱
+var jsonData = ${test};
+
+// 리스트 형식으로 데이터 표시
+document.write("<ul>");
+for (var i = 0; i < jsonData.length; i++) {
+    var matchId = jsonData[i];
+    var xhr = new XMLHttpRequest();
+    var url = "/fconline/matchDetail?jsonData=" + encodeURIComponent(JSON.stringify(matchId));
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var matchLink = "/fconline/matchDetail?jsonData=" + matchId;
+                document.write("<li><a href='" + matchLink + "'>최근 경기 " + (jsonData.length - i) + "</a></li>");
+            } else {
+                console.log('Error: ' + xhr.status);
+            }
+        }
+    };
+    xhr.send();
+}
+document.write("</ul>");
+</script>
+</body>
+</html>

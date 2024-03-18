@@ -1,0 +1,9 @@
+package com.peisia.c.board.shop.display;
+
+public class Display {
+	static private String TITLE_BAR = "🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈"; 
+	static private String TITLE 	= "🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈     쇼핑몰     🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈🐈"; 
+	
+	static private String MAIN_MENU_BAR = "================================================================";
+	static private String MAIN_MENU	 	= "[1]제품리스트 [2]제품상세 [3]제품등록 [4]제품삭제 [5]제품수정 [6]검색 ";
+}

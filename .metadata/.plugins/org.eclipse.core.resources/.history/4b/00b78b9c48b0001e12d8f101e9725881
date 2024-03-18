@@ -1,0 +1,81 @@
+package com.peisia.c.board;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+import com.peisia.c.board.display.Display;
+import com.peisia.c.board.util.DB;
+
+public class ProcBoard {
+	void run() {
+		Display.showTitle();
+		Display.showMainMenu();
+		DB.dbInit();
+		DB.dbPostCount();
+		System.out.println("================================================================");
+//		dbExecuteQuery("select * from tottenham_squad where p_number=7");
+
+		Scanner sc = new Scanner(System.in);
+		
+		loop:
+		while(true) {
+			System.out.println("옵션을 선택하세요: ");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			String cmd = sc.next();
+			switch (cmd) {
+			case "1":
+				ProcList.run();
+				break;
+			case "2":
+				ProcRead.run();	
+				break;
+			case "3":
+				ProcWrite.run();
+				break;
+			case "4":
+				System.out.println("삭제할 글번호를 입력하세요: ");
+				String delNo = sc.next();
+				String sql = "delete from javaboard where no="+delNo;
+				DB.dbExecuteUpdate(sql);
+				break;
+			case "5":
+				System.out.println("수정할 글번호를 입력해주세요:");
+				String editNo = sc.next();
+				System.out.println("제목을 입력해주세요:");
+				//주의. 이전에 sc.next() 등을 호출한적이 있으면 엔터 문자열이 남게 되는데 이거 때문에 다음에 나오는 nextLine()가
+				//입력을 이미 한것으로 인식하고 입력처리를 해버림(공백 입력이 된걸로 인식)
+				//그래서 sc.nextLine()을 한번 더 추가해주어 이 내용이 없는 엔터 문자열을 입력처리 하게끔하고
+				sc.nextLine();
+				//안쓰면 일어나는 일
+				//제목을 입력해주세요:
+				//작성자id를 입력해주세요:
+				//가 동시에 일어난다.
+				String edTitle = sc.nextLine();	// << 여기에서 다시 정상적으로 쓰면됨.
+				System.out.println("작성자id를 입력해주세요:");
+				String edId = sc.next();				
+				System.out.println("글내용을 입력해주세요:");
+				sc.nextLine();	//위에 sc.next() 쓴거 때문에 추가함.
+				String edContent = sc.nextLine();
+				
+				DB.dbExecuteUpdate("update javaboard set b_title='"+edTitle+"',b_id='"+edId+"',b_date=now(),b_text='"+edContent+"' where no="+editNo);
+				break;
+			case "0":
+				
+				break;
+			case "e":
+				System.out.println("시스템을 종료합니다.");
+				break loop;
+			default:
+				System.out.println("옵션에 없습니다. 다시 입력하세요.");
+				break;
+			}
+		}
+	}
+}

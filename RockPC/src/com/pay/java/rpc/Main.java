@@ -1,0 +1,88 @@
+package com.pay.java.rpc;
+
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		System.out.println("가위 바위 보를 입력하세요.");
+		Scanner sc = new Scanner(System.in);
+		int r = 0;
+		String result = "";
+		String cmd = "";
+		String comRpc = "";
+		
+		xx:
+		while(true) {
+			cmd = sc.next();
+			r = (int)(Math.random() * 3 + 1);
+			
+			if(r == 1) {
+				comRpc = "가위";
+			}
+			
+			else if(r == 2) {
+				comRpc = "보";
+			}
+			
+			else if(r == 3) {
+				comRpc = "보";
+			}
+			
+			System.out.println("컴퓨터는 " + comRpc + "를 냈습니다.");
+			
+			if(cmd.equals("가위")) {
+				if(comRpc.equals("가위")) {
+					result = "비김";
+				}
+				
+				if(comRpc.equals("바위")) {
+					result = "짐";
+				}
+				
+				if(comRpc.equals("보")) {
+					result = "이김";
+				}
+			}
+			
+			else if(cmd.equals("바위")) {
+				if(comRpc.equals("가위")) {
+					result = "이김";
+				}
+				
+				if(comRpc.equals("바위")) {
+					result = "비김";
+				}
+				
+				if(comRpc.equals("보")) {
+					result = "짐";
+				}
+			}
+			
+			else if(cmd.equals("보")) {
+				if(comRpc.equals("가위")) {
+					result = "짐";
+				}
+				
+				if(comRpc.equals("바위")) {
+					result = "이김";
+				}
+				
+				if(comRpc.equals("보")) {
+					result = "비김";
+				}
+			}
+			
+			else if(cmd.equals("x")) {
+				System.out.println("게임을 종료합니다.");
+				break;
+			}
+			
+			else {
+				result = "error";
+				System.out.println("다른것을 냈습니다.");
+			}
+			
+			System.out.println("결과: " + result);
+		}
+	}
+}

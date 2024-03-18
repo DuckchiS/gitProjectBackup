@@ -1,0 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/resources/fconline.css" >
+<meta charset="UTF-8">
+<title>전적상세확인</title>
+</head>
+<body>
+    <h1>Match Detail</h1>
+    <hr>
+    <a href="/">처음으로 가기</a>
+    <hr>
+<% for (int i = 0; i < matchInfoArray.size(); i++) { %>
+    <%-- 모델에 담긴 데이터를 사용하여 출력 --%>
+    <p>유저: ${matchInfoArray[i].nickname}</p>
+    <p>경기결과: ${matchInfoArray[i].matchDetail.matchResult}</p>
+    <p>점유율: ${matchInfoArray[i].matchDetail.possession}</p>
+    <p>총 슈팅수: ${matchInfoArray[i].shoot.shootTotal}</p>
+    <p>유효슈팅: ${matchInfoArray[i].shoot.effectiveShootTotal}</p>
+    <p>총 골수: ${matchInfoArray[i].shoot.goalTotal}</p>
+<% } %>
+    <hr>
+	${tests }
+</body>
+</html>

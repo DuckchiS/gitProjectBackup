@@ -1,0 +1,9 @@
+package com.peisia.c.inher;
+
+public class Character {
+	int hp;
+	Character() {
+		super();
+		System.out.println("자식 객체가 생성됬음");
+	}
+}

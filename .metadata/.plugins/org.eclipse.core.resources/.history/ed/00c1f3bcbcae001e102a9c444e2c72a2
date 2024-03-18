@@ -1,0 +1,73 @@
+package Data;
+
+import java.util.ArrayList;
+
+import Util.Cw;
+
+public class Char extends Character {
+	public int score = 0;
+	public ArrayList<Skill> charSkillBag = new ArrayList<>();
+	
+	Char(String name,String rank,int lv,int score) {
+		super(name,rank,lv);
+		this.score = score;
+	}
+	
+	public void charinfo() {
+		Cw.w("이름:["+this.name+"] 등급:["+this.rank+"] Lv.["+this.lv+"] 직업:["+Create.playerJob+"]");
+		Cw.wn();
+		Cw.w("체력:["+Create.playerHp+"/"+Create.playerMaxHp+"]");
+		Cw.space(1);
+		Cw.w("마력:["+Create.playerMp+"/"+Create.playerMaxMp+"]");
+		Cw.wn();
+		Cw.w("공격력:["+Create.playerAtk+"]");
+		Cw.space(1);
+		Cw.w("방어력:["+Create.playerDef+"]");
+		Cw.wn();
+		Cw.w("경험치:["+Create.playerExp+"/"+Create.playerMaxExp+"]");
+		Cw.space(1);
+		Cw.w("소지금:["+Create.playerGold+" G]");
+		Cw.space(1);
+		Cw.w("점수:"+this.score);
+		Cw.wn();
+	}
+	public void charmaininfo() {
+		Cw.w("이름:["+this.name+"] Lv.["+this.lv+"] 직업:["+Create.playerJob+"]");
+		Cw.wn();
+		Cw.w("소지금:["+Create.playerGold+" G]");
+		Cw.space(1);
+		Cw.w("점수:"+this.score);
+		Cw.wn();
+	}
+	public void charmap() {
+		Cw.wn("현재방:["+MapData.mapList.get(Create.playerMap).mapName+"]");
+	}
+	
+	public void charBattleInfo() {
+		Cw.w("이름:["+this.name+"] Lv.["+this.lv+"] 직업:["+Create.playerJob+"]");
+		Cw.wn();
+		Cw.w("체력:["+Create.playerHp+"/"+Create.playerMaxHp+"]");
+		Cw.space(1);
+		Cw.w("마력:["+Create.playerMp+"/"+Create.playerMaxMp+"]");
+		Cw.wn();
+		Cw.w("공격력:["+Create.playerAtk+"]");
+		Cw.space(1);
+		Cw.w("방어력:["+Create.playerDef+"]");
+	}
+	
+	
+	
+	public void charSkillInfo() {
+		Cw.wn("----스킬 목록----");
+		for(Skill a:charSkillBag) {
+			if(!charSkillBag.isEmpty()) {
+				Cw.w("["+a.skillName+"]");
+				Cw.space(1);
+			}else {
+				Cw.wn("스킬 목록이 비어있습니다.");
+			}
+			Cw.wn();
+		}
+	}
+
+}

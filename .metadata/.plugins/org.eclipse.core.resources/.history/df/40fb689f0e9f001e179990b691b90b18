@@ -1,0 +1,7 @@
+package com.peisia.c.webBlogV1;
+
+public class ProcMenuDel {
+	public static void run() {
+		
+	}
+}

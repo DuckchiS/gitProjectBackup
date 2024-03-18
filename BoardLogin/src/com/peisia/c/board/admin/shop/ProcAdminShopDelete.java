@@ -1,0 +1,12 @@
+package com.peisia.c.board.admin.shop;
+
+import com.peisia.c.board.site.SiteMain;
+import com.peisia.c.board.util.Ci;
+import com.peisia.c.board.util.DB;
+
+public class ProcAdminShopDelete {
+	public static void run(int delNo) {
+		DB.dbExecuteUpdate("delete from "+DB.Table_Shop+" where no='"+delNo+"'");
+		System.out.println("삭제되었습니다.");
+	}
+}

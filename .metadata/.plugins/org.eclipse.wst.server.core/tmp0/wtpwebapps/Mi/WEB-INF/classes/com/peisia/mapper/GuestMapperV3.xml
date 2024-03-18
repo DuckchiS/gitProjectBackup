@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peisia.mapper.GuestMapperV3">
+	<select id="getCount" resultType="int">
+		SELECT count(*) from tableguestv2 
+	</select>
+	<select id="getSearchCount" resultType="int">
+		select count(*) from tableguestv2 where b_title like concat('%s',#{word},'%') 
+	</select>
+	<select id="getList" resultType="com.peisia.spring.dto.GuestDtoV3">
+		select * from tableguestv2 limit #{limitIndex},5
+	</select>
+	<select id="getSearchList" resultType="com.peisia.spring.dto.GuestDtoV3">
+		select * from tableguestv2 where b_title like concat('%s',#{word},'%') limit #{limitIndex},5
+	</select>
+	<select id="read" resultType="com.peisia.spring.dto.GuestDtoV3">
+		select * from tableguestv2 where bno = #{bno}
+	</select>
+	<delete id="del">
+		delete from tableguestv2 where bno = #{bno}
+	</delete>
+	<insert id="write">
+		insert into tableguestv2 (b_title,btext) values (#{b_title},#{btext})
+	</insert>
+	<update id="modify">
+		update tableguestv2 set btext = #{btext}, b_update = now() where bno = #{bno}
+	</update>
+	<update id="hit">
+		update tableguestv2 set b_hit = b_hit + 1 where bno = #{bno}
+	</update>
+</mapper>

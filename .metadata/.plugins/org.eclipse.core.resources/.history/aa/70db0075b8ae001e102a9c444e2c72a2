@@ -1,0 +1,72 @@
+package Data;
+
+import java.util.ArrayList;
+
+import Util.Cw;
+
+public class MapData {
+	public int serialNumber;
+	public String mapName;
+	public int x;
+	public int y;
+	public static int maxX = Integer.MIN_VALUE;
+	public static int maxY = Integer.MIN_VALUE;
+	public static int minX = Integer.MIN_VALUE;
+	public static int minY = Integer.MIN_VALUE;
+
+	public static ArrayList<MapData> mapList = new ArrayList<>();
+
+	public MapData(int serialNumber, String mapName, int x, int y) {
+		this.serialNumber = serialNumber;
+		this.mapName = mapName;
+		this.x = x;
+		this.y = y;
+	}
+
+	public static void mapLoad() {
+		mapList.add(new MapData(0, "튜토리얼", 100, 100));
+		mapList.add(new MapData(1, "초급 훈련장", 101, 100));
+		mapList.add(new MapData(2, "중급 훈련장", 102, 100));
+		mapList.add(new MapData(4, "시작의 마을", 103, 100));
+		mapList.add(new MapData(5, "초원", 104, 100));
+
+		
+
+		for (MapData map : mapList) {
+			if (map.x > maxX) {
+				maxX = map.x;
+			}
+			if (map.x < minX) {
+				maxX = map.x;
+			}
+			if (map.y > maxY) {
+				maxY = map.y;
+			}
+			if (map.y < minY) {
+				maxY = map.y;
+			}
+		}
+	}
+
+	public void mapInfo() {
+		Cw.wn("현재 방:[" + mapName + "]");
+	}
+
+	public static boolean checkingSerialNumber(int playerX, int playerY) {
+		for (MapData map : mapList) {
+			if (map.x == playerX && map.y == playerY) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean checkingPlayerMap(int playerX, int playerY) {
+		if(playerX >= minX && playerX <= maxX && playerY >= minY && playerY <= maxY) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+}

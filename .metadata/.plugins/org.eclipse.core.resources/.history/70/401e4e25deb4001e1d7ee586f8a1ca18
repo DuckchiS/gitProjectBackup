@@ -1,0 +1,71 @@
+package com.peisia.c.board.shop;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+import com.peisia.c.board.admin.ProcAdmin;
+import com.peisia.c.board.shop.display.Display;
+import com.peisia.c.board.util.DB;
+
+public class ProcShop {
+	public static void run() {
+		Display.showTitle();
+		DB.dbInit();
+		
+		Scanner sc = new Scanner(System.in);
+		loop:
+		while(true) {
+			String sql = "SELECT * FROM " + DB.Table_Shop +
+					" WHERE shop_reply_ori IS NULL " +
+					" ORDER BY recommend desc " +
+					" LIMIT 0,3";
+			try {
+				System.out.println("명령한 sql문: "+sql);
+				DB.result = DB.st.executeQuery(sql);
+				while(DB.result.next()) {
+					String no = DB.result.getString("no");
+					String title = DB.result.getString("shop_title");
+					String id = DB.result.getString("shop_id");
+					System.out.println(no+" "+title+" "+id);
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+				System.out.println("상품이 없습니다.");
+			} 
+			Display.showMainMenu();
+			System.out.println("옵션을 선택하세요:");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			String cmd = sc.next();
+			switch(cmd) {
+			case "1":
+				ProcS_List.run();
+				break;
+			case "2":
+				ProcS_Read.run();
+				break;
+			case "3":
+				ProcS_Write.run();
+				break;
+			case "4":
+				ProcS_Delete.run();
+				break;
+			case "5":
+				ProcS_Update.run();
+				break;
+			case "6":
+				ProcS_List.search();
+				break;
+			case "0":
+				ProcAdmin.run();
+				break;
+			case "x":
+				System.out.println("이전 화면으로 돌아갑니다.");
+				break loop;
+			default:
+				System.out.println("옵션에 없습니다. 다시 입력하세요.");
+				break;
+			}
+		}
+	}
+}

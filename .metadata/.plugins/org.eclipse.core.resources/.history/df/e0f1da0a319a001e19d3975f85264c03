@@ -1,0 +1,12 @@
+package com.pay.java.array;
+
+public class Main {
+	public static void main(String[] args) {
+		int lotto[] = new int[6];
+		
+		for(int i = 0; i < lotto.length; i++) {
+			lotto[i] = (int)(Math.random() * 6 + 1);
+			System.out.println(lotto[i]);
+		}
+	}
+}

@@ -1,0 +1,15 @@
+package com.peisia.c.board.shop;
+
+import com.peisia.c.board.util.Ci;
+
+public class ProcS_Write {
+	public static void run() {
+		String title = Ci.r("상품이름을 입력하세요.");
+		String content = Ci.r("상품내용을 입력하세요.");
+		try {
+			System.out.println("상품 등록 완료");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

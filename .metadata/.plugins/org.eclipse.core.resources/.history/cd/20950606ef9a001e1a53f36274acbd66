@@ -1,0 +1,10 @@
+
+
+public class Snippet {
+	public static void main(String[] args) {
+		System.out.println("==================================");
+						System.out.println("============= 디저트 리스트    =======");
+						System.out.println("==================================");
+						p3.info();	
+	}
+}

@@ -1,0 +1,30 @@
+package com.peisia.c.board;
+
+import com.peisia.c.board.display.Display;
+import com.peisia.c.board.util.DB;
+
+public class ProcList {
+	static int PER_PAGE = 3;
+	static int startIndex = 0;
+	static int currentIndex = 1;
+	static int totalPage = 0;
+	static int count = 0;
+	public static void run() {
+		count = DB.dbPostCount();
+		if(count % PER_PAGE > 0) {
+			totalPage = count / PER_PAGE + 1;
+		} else {
+			totalPage = count / PER_PAGE;
+		}
+		
+		System.out.println("총 페이지수:" + totalPage);
+		startIndex = (currentIndex - 1) * PER_PAGE;
+		Display.titleList();
+		
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

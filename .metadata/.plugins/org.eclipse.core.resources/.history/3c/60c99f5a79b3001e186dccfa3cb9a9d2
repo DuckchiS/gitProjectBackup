@@ -1,0 +1,7 @@
+package com.peisia.c.board.shop;
+
+public class ProcS_Write {
+	public static void run() {
+		
+	}
+}

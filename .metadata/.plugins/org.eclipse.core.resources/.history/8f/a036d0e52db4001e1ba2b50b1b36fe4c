@@ -1,0 +1,14 @@
+package com.peisia.c.board.admin;
+
+import com.peisia.c.board.util.Ci;
+
+public class ProcAdmin {
+	private static String cmd = "";
+	public static void run() {
+		
+	}
+	
+	static void adminEditBoardTitle() {
+		cmd = Ci.r("수정할 게시글 제목을 적으세요.");
+	}
+}

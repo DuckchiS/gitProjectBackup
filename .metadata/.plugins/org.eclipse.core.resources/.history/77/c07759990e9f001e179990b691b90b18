@@ -1,0 +1,7 @@
+package com.peisia.c.webBlogV1;
+
+public class ProcMenuWrite {
+	public static void run() {
+		
+	}
+}

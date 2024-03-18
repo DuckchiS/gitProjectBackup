@@ -1,0 +1,6 @@
+package Cat;
+
+public class Xxx {
+	Cat cat1 = new Cat();
+	
+}

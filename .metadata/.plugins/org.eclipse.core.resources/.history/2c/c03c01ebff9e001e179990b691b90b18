@@ -1,0 +1,7 @@
+package com.peisia.c.KioskV3;
+
+public class ProcMenuOptionSize {
+	public static void run(int product) {
+		
+	}
+}

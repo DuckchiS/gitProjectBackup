@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Ci.java&apos; to &apos;Board/src/com.peisia.c.board.display&apos;&#x0D;&#x0A;- Original project: &apos;webBlogV1&apos;&#x0D;&#x0A;- Destination element: &apos;Board/src/com.peisia.c.board.display&apos;&#x0D;&#x0A;- Original element: &apos;com.peisia.c.util.Ci.java&apos;" description="Copy compilation unit" destination="=Board/src&lt;com.peisia.c.board.display" element1="/src&lt;com.peisia.c.util{Ci.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1704942970601" units="1" version="1.0"/>
+</session>

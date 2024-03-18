@@ -1,0 +1,27 @@
+package com.peisia.c.board.shop;
+
+import com.peisia.c.board.shop.display.Display;
+import com.peisia.c.board.util.DB;
+
+public class ProcS_Reply {
+	public static void list(int oriNo) {
+		Display.replyBar();
+		String sql = "select * from "+DB.Table_Shop+" where shop_ori_no="+oriNo;
+		try {
+			System.out.println("전달한 sql문: "+sql);
+			DB.result = DB.st.executeQuery(sql);
+			while(DB.result.next()) {
+				String reply_Text = DB.result.getString("shop_reply_text");
+				String reply_ID = DB.result.getString("shop_id");
+				System.out.print("content: "+reply_Text+" ");
+				System.out.println("ID: "+reply_ID);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void write(int shop_reply_ori) {
+		
+	}
+}

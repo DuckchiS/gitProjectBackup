@@ -1,0 +1,17 @@
+package Data;
+
+public class CharPoint {
+	int charTop = 0;
+	int charBottom = 0;
+	int charLeft = 0;
+	int charRight = 0;
+	
+	
+	public CharPoint(int t,int b,int l,int r){
+		this.charTop = t;
+		this.charBottom = b;
+		this.charLeft = l;
+		this.charRight = r;
+	}
+
+}

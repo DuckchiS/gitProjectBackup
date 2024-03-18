@@ -1,0 +1,65 @@
+package com.peisia.util.kiosk;
+
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		System.out.println("============================================");
+		System.out.println("================= 고양이카페       ===========");
+		System.out.println("============================================");
+		
+		Product p1 = new Product("아아", 1500);
+		Product p2 = new Product("뜨아", 1500);
+		Product p3 = new Product("아아", 4500);
+		
+		Scanner sc = new Scanner(System.in);
+		String cmd;
+		
+		loop_a:
+			while(true) {
+				System.out.println("주문을 입력하세요.");
+				cmd = sc.next();
+				switch (cmd) {
+				case "1":
+					loop_b:
+						while(true) {
+							System.out.println("==================================");
+							System.out.println("============= 음료 리스트    =======");
+							System.out.println("==================================");
+							p1.info();
+							p2.info();
+							cmd = sc.next();
+							switch (cmd) {
+							case "아아":
+								System.out.println("아아를 선택했습니다.");
+								break;
+
+							case "뜨아":
+								System.out.println("뜨아를 선택했습니다.");								
+								break;
+								
+							case "x":
+								break loop_b;
+								
+							default:
+								System.out.println("메뉴에 없습니다. 다시 주문하세요.");
+								break;
+							}
+						}
+					break;
+					
+				case "2":
+					System.out.println("==================================");
+					System.out.println("============= 디저트 리스트    =======");
+					System.out.println("==================================");
+					p3.info();	
+					break;
+					
+				case "x":
+					break loop_a;
+					
+				}	
+			}
+		System.out.println("프로그램을 종료합니다.");
+	}
+}

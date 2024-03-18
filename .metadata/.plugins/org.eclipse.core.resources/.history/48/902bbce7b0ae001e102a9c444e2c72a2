@@ -1,0 +1,56 @@
+package Data;
+
+import java.util.ArrayList;
+
+import Util.Cw;
+
+public class MapData {
+	public int serialNumber;
+	public String mapName;
+	public int x;
+	public int y;
+	
+	public static ArrayList<MapData> mapList = new ArrayList<>();
+	
+	public MapData(int serialNumber,String mapName,int x,int y){
+		this.serialNumber = serialNumber;
+		this.mapName = mapName;
+		this.x = x;
+		this.y = y;
+	}
+	
+	public static void mapLoad() {
+		MapData.mapList.add(new MapData(0,"튜토리얼",0,0));
+		MapData.mapList.add(new MapData(1,"초급 훈련장",1,0));
+		MapData.mapList.add(new MapData(2,"중급 훈련장",2,0));
+		MapData.mapList.add(new MapData(3,"상급 훈련장",3,0));
+		MapData.mapList.add(new MapData(4,"시작의 마을",4,0));
+		MapData.mapList.add(new MapData(5,"초원",5,0));
+	}
+	
+	public void mapInfo() {
+		Cw.wn("현재 방:["+mapName+"]");
+	}
+	
+	public static boolean checkingSerialNumber(int serialNumber, int playerX, int playerY) {
+		for(MapData map:mapList) {
+			if(map.serialNumber == serialNumber && map.x == playerX && map.y == playerY) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean checkingPlayerMap(int playerMap,int playerX) {
+		System.out.println(mapList.size());
+		if(playerMap >= 0 && playerMap < mapList.size() && playerX >= 0 && playerX >= mapList.get(playerMap).x) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	
+
+
+}

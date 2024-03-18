@@ -1,0 +1,18 @@
+package com.pay.java.lotto;
+
+public class Lotto {
+	public void random(){
+		int comLotto[] = new int[6];
+		int userLotto[] = new int[6];
+		int j;
+		int i;
+		for(j = 0; j < userLotto.length; j++) {
+			userLotto[j] = (int)(Math.random() * 45 + 1);
+			for(i = 0; i < j; i++) {
+				comLotto[i] = (int)(Math.random() * 45 + 1);
+			}
+			System.out.println("유저" + userLotto[j]);
+		}
+	}
+	System.out.println("컴퓨터" +comLotto[i]);
+}

@@ -1,0 +1,47 @@
+package com.peisia.c.board.site;
+
+import com.peisia.c.board.member.ProcMemberLogin;
+import com.peisia.c.board.member.ProcMemberRegister;
+import com.peisia.c.board.site.display.Display;
+import com.peisia.c.board.util.Ci;
+import com.peisia.c.board.util.DB;
+
+public class SiteMain {
+	private static String cmd = "";
+	public static String loginedId = null;
+	public static void run() {
+		DB.dbInit();
+		loop:
+		while(true) {
+			Display.entranceTitle();
+			if(loginedId == null) {
+				cmd = Ci.r("[r] 회원가입, [l] 로그인, [e] 프로그램 종료");
+			}	else {
+				cmd = Ci.r("[l] 로그아웃, [b] 게시판, [a] 관리자, [e] 프로그램 종료");
+			}
+			switch(cmd) {
+			case "r":
+				ProcMemberRegister.run();
+				break;
+			case "l":
+				if(loginedId == null) {
+					loginedId = ProcMemberLogin.run();
+				} else {
+					System.out.println("[로그아웃 되었습니다.]");
+					loginedId = null;
+				}
+				break;
+			case "b":
+				break;
+			case "a":
+				break;
+			case "e":
+				System.out.println("프로그램을 종료합니다.");
+				break loop;
+			default:
+				System.out.println("옵션에 없습니다. 다시 입력하세요.");
+				break;
+			}
+		}
+	}
+}

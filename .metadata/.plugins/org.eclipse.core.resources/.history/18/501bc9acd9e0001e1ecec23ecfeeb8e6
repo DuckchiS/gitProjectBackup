@@ -1,0 +1,14 @@
+  const API_KEY = "발급 받은 API Key";
+  const userName = "캐릭터명";
+  const urlString = "https://open.api.nexon.com/fconline/v1/id?nickname=" + userName;
+  
+  const answer = fetch(urlString, {
+      headers:{
+        "x-nxopen-api-key": API_KEY
+      }
+  })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error))
+  
+  console.log(answer)

@@ -1,0 +1,116 @@
+package com.peisia.c.board.shop;
+
+import com.peisia.c.board.shop.display.Display;
+import com.peisia.c.board.util.Ci;
+import com.peisia.c.board.util.DB;
+
+public class ProcS_List {
+	static int PER_PAGE = 3;
+	static int startIndex = 0;
+	static int currentPage = 1;
+	static int totalPage = 0;
+	static int count = 0;
+	static String cmd = "";
+	static boolean isSearchMode = false;	
+	
+	public static void run() {
+		count = DB.shopDBPostCount();
+		if(count % PER_PAGE > 0) {
+			totalPage = count / PER_PAGE + 1;
+		} else {
+			totalPage = count / PER_PAGE;
+		}
+		System.out.println("총페이지 수:"+totalPage);
+		while(true) {
+			cmd = Ci.r("페이지번호입력[이전 메뉴로:x]");
+			if(cmd.equals("x")) {
+				break;
+			}
+			try {
+				currentPage = Integer.parseInt(cmd);
+				if(currentPage > totalPage || currentPage < 1) {
+					System.out.println("페이지 범위안에 값을 입력하세요.");
+				}
+				startIndex = (currentPage - 1) * PER_PAGE;
+				Display.titleList();
+				String sql = "SELECT * FROM " + DB.Table_Shop +
+			              " WHERE shop_reply_ori IS NULL " +
+			              " ORDER BY shop_hit desc " +
+			              " LIMIT " + startIndex + "," + PER_PAGE;
+				try {
+					System.out.println("명령한 sql문: "+sql);
+					DB.result = DB.st.executeQuery(sql);
+					while(DB.result.next()) {
+						String no = DB.result.getString("no");
+						String title = DB.result.getString("shop_title");
+						String id = DB.result.getString("shop_id");
+						String date = DB.result.getString("shop_date");
+						int hit = DB.result.getInt("shop_hit");
+						System.out.println(no+" "+title+" "+id+" "+date+" "+hit);
+					}
+				} catch(Exception e) {
+					e.printStackTrace();
+					System.out.println("상품이 없습니다.");
+				} 
+			} catch(NumberFormatException e) {
+				System.out.println("숫자만 입력하세요.");
+			}
+		}
+	}
+	
+	public static void search() {
+		cmd = Ci.r("검색어[x:나가기]");
+		if(cmd.equals("x")) {
+			return;
+		} else {
+			searchList(cmd);
+		}
+	}
+	
+	public static void searchList(String searchWord) {
+		count = DB.getShopPostSearch(searchWord);
+		if(count % PER_PAGE > 0) {
+			totalPage = count / PER_PAGE + 1;
+		} else {
+			totalPage = count / PER_PAGE;
+		}
+		System.out.println("총 페이지 수<검색모드>:"+totalPage);
+		while(true) {
+			cmd = Ci.r("페이지번호입력[이전 메뉴로:x]");
+			if(cmd.equals("x")) {
+				break;
+			}
+			
+			try {
+				currentPage = Integer.parseInt(cmd);
+				if(currentPage > totalPage || currentPage < 1) {
+					System.out.println("페이지 범위안에 값을 입력하세요.");
+				}
+				startIndex = (currentPage - 1) * PER_PAGE;
+				Display.titleList();
+				String sql = "select * from "+DB.Table_Shop+" where shop_reply_ori is null"
+						+ " and shop_title like '%" + searchWord + "%'"
+						+ " ORDER BY shop_hit desc "
+						+ " limit "+startIndex + "," + PER_PAGE;
+				try {
+					System.out.println("명령한 sql문: "+sql);
+					DB.result = DB.st.executeQuery(sql);
+					while(DB.result.next()) {
+						String no = DB.result.getString("no");
+						String title = DB.result.getString("shop_title");
+						String id = DB.result.getString("shop_id");
+						String date = DB.result.getString("shop_date");
+						int hit = DB.result.getInt("shop_hit");
+						System.out.println(no+" "+title+" "+id+" "+date+" "+hit);
+					}
+				} catch(Exception e) {
+					e.printStackTrace();
+					System.out.println("상품이 없습니다.");
+				} 
+			} catch(NumberFormatException e) {
+				System.out.println("숫자만 입력하세요.");
+			}
+		}
+	}
+	
+}

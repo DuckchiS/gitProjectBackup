@@ -1,0 +1,27 @@
+package com.peisia.c.inheritanceV1;
+
+import java.util.ArrayList;
+
+import com.peisia.c.util.So;
+
+public class main {
+	public static void main(String[] args) {
+		// 게임 오브젝트들 로딩
+		Character c = new Character("고양이",3,100);
+		
+		Sword s = new Sword("단검",2,100,50,70);
+		Sword l = new Sword("장검",3,150,100,70);
+
+		//할아버지형 리스트에 손자,아들,본인 다 넣을수 있음. (상속의 중요 특성)
+		ArrayList<GameObj> gs = new ArrayList<>();
+		gs.add(c);	//자동 형변환이 일어남.
+		gs.add(s);
+		gs.add(l);
+		for(GameObj o : gs) {
+			So.ln(o.name);
+			So.ln(o.grade);
+		}
+		//So.ln(o.attack);을 출력할려고 하면 출력이 안된다.
+		//이유는 부모형(할아버지형) 리스트에 대한 변수들만 출력이 가능하고 나머지 자식 변수들의 출력은 안된다.
+ 	}
+}

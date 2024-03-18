@@ -1,0 +1,56 @@
+package com.peisia.c.board.admin.post;
+
+import java.sql.SQLException;
+
+import com.peisia.c.board.util.Ci;
+import com.peisia.c.board.util.DB;
+
+public class ProcAdminBoardRead {
+	public static void run() {
+		String readNo = Ci.r("읽을 글 번호를 입력하세요:");
+		try {
+			DB.st.executeUpdate("update "+DB.Table_Board+" set b_hit = b_hit+1 where no ="+readNo);
+			DB.result = DB.st.executeQuery("select * from "+DB.Table_Board+" where no="+readNo);
+			DB.result.next();
+			String title = DB.result.getString("b_title");
+			String content = DB.result.getString("b_text");
+			int hit = DB.result.getInt("b_hit");
+			System.out.println("제목: "+title);
+			System.out.println("내용: "+content);
+			System.out.println("조회수: "+hit);
+			
+			if (DB.result != null) {
+				DB.result.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ProcAdminBoardReply.list(Integer.parseInt(readNo));
+		loop:
+		while(true) {
+			String cmd = Ci.r("명령[x:나가기,r:댓글쓰기,p:추천하기]");
+			switch (cmd) {
+			case "x":
+				break loop;
+			case "r":
+				ProcAdminBoardReply.write(Integer.parseInt(readNo));
+				break;
+			case "p":
+				recommend(Integer.getInteger(readNo));
+				break;
+			default:
+				System.out.println("옵션에 없습니다.");
+				break;
+			}
+		}
+	}
+	
+	private static void recommend(int readNo) {
+		try {
+			DB.st.executeUpdate("update "+DB.Table_Shop+" set recommend = recommend+1 where no ="+readNo);
+			System.out.println("완료되었습니다");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}

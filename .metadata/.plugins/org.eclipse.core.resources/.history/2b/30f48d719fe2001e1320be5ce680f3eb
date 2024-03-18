@@ -1,0 +1,88 @@
+package com.peisia.service;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+
+@Service
+public class FcService {
+	private final String API_KEY = "test_d101652904df6b58ef540a48653d7217d23ee7ea22014742e2004f28b02dad90b11206025f65fce822c9f5402cb8b869";
+	private final String rank = "https://open.api.nexon.com/static/fconline/meta/division.json";
+	private final String baseUrl = "https://open.api.nexon.com/fconline";
+	
+	public void ouid(Model model, String word) {
+		try {
+			String characterName1 = URLEncoder.encode(word, StandardCharsets.UTF_8);
+	        String urlString1 = "https://open.api.nexon.com/fconline/v1/id?nickname="+characterName1;
+	        URL url1 = new URL(urlString1);
+
+	        HttpURLConnection connection1 = (HttpURLConnection)url1.openConnection();
+	        connection1.setRequestMethod("GET");
+	        connection1.setRequestProperty("x-nxopen-api-key", API_KEY);
+
+	        int responseCode1 = connection1.getResponseCode();
+	        
+	        
+	        BufferedReader in1;
+	        if(responseCode1 == 200) {
+	          in1 = new BufferedReader(new InputStreamReader(connection1.getInputStream()));
+	        } else {
+	          in1 = new BufferedReader(new InputStreamReader(connection1.getErrorStream()));
+	        }
+
+	        String inputLine1;
+	        StringBuffer response1 = new StringBuffer();
+	        while ((inputLine1 = in1.readLine()) != null) {
+	          response1.append(inputLine1);
+	        }
+	        
+	        in1.close();
+	        System.out.println(response1.toString());
+		} catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void user(Model model, String word,HttpServletRequest request) {
+		try {
+			
+		} catch(Exception e) {
+			System.out.println(e);
+		}		
+	}
+	
+	public void match(Model model, String word,HttpServletRequest request) {
+		try {
+			
+		} catch(Exception e) {
+			System.out.println(e);
+		}	
+	}
+	
+	public void matchDetail(Model model, String word,HttpServletRequest request) {
+		try {
+			
+		} catch(Exception e) {
+			System.out.println(e);
+		}	
+	}
+	
+	private static String parseFirstApiResponse(String response) {
+	    // JSON 형식의 응답을 파싱하여 필요한 데이터를 추출
+	    JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
+	    String data = jsonObject.get("ouid").getAsString();
+	    return data;
+	}
+}

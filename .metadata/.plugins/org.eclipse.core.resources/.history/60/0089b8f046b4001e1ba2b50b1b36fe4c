@@ -1,0 +1,35 @@
+package com.peisia.c.board.shop;
+
+import com.peisia.c.board.util.Ci;
+import com.peisia.c.board.util.DB;
+
+public class ProcS_Read {
+	public static void run() {
+		String readNo = Ci.r("읽을 상품번호를 입력하세요");
+		try {
+			DB.result = DB.st.executeQuery("select * from "+DB.Table_Shop+" where no ="+readNo);
+			DB.result.next();
+			String title = DB.result.getString("shop_title");
+			String content = DB.result.getString("shop_text");
+			System.out.println(title);
+			System.out.println(content);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		ProcS_Reply.list(Integer.parseInt(readNo));
+		loop:
+		while(true) {
+			String cmd = Ci.r("명령[x:나가기,r:댓글쓰기]");
+			switch(cmd) {
+			case "x":
+				break loop;
+			case "r":
+				ProcS_Reply.write(Integer.parseInt(readNo));
+				break;
+			default:
+				System.out.println("옵션에 없습니다.");
+				break;
+			}
+		}
+	}
+}

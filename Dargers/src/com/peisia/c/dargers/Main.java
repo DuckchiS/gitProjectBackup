@@ -1,0 +1,8 @@
+package com.peisia.c.dargers;
+
+public class Main {
+	public static void main(String[] args) {
+		ProcDargers dargers = new ProcDargers();
+		dargers.run();
+	}
+}

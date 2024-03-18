@@ -1,0 +1,78 @@
+package Main;
+
+import java.util.ArrayList;
+
+import Data.Create;
+import Data.Monster;
+import Util.Cw;
+
+public class MonsterRegen {
+
+	public static ArrayList<Monster> group = new ArrayList<>();
+	public ArrayList<Monster> monsterList = new ArrayList<>();
+
+	public void regenrun() {
+		ActionPage action = new ActionPage();
+		int randomDice = (int) (Math.random() * 3 + 1);
+		int randomLV = 0;
+		int monsterTemplate = 0;
+		String persona = "";
+//		Monster(이름 , 랭크, 레벨, 공격력, 체력, 최대체력, 방어력, 경험치, 골드, 성격, 점수)
+		switch(Create.playerMap) {
+		case 1: //초급 훈련장
+			for(int i=1; i<=randomDice; i++) {
+				monsterTemplate = (int) (Math.random() *1+1);
+				switch(monsterTemplate) {
+				case 1:
+					randomLV = (int)(Math.random()*3+1);
+					persona = MonsterPersona.persona();
+					group.add(new Monster("슬라임","F",randomLV,(3+randomLV*5),(8+randomLV*12),(8+randomLV*12),0,0,(5+randomLV*10),(10+randomLV*30),persona,(5+randomLV*10)));
+				}
+			}
+			break;
+		case 2: //중급 훈련장
+//			Monster(이름 , 랭크, 레벨, 공격력, 체력, 최대체력, 방어력, 경험치, 골드, 성격, 점수)
+			for(int i=1; i<=randomDice; i++) {
+				monsterTemplate = (int) (Math.random() *2+1);
+				switch(monsterTemplate) {
+				case 1:
+					randomLV = (int)(Math.random()*2+3);
+					persona = MonsterPersona.persona();
+					group.add(new Monster("고블린","E",randomLV,(5+randomLV*3),(35+randomLV*15),(35+randomLV*15),2,0,(10+randomLV*15),(10+randomLV*40),persona,(15+randomLV*5)));
+				case 2:
+					randomLV = (int)(Math.random()*5+5);
+					persona = MonsterPersona.persona();
+					group.add(new Monster("오크","E",randomLV,(10+randomLV*3),(50+randomLV*20),(50+randomLV*20),5,0,(20+randomLV*10),(20+randomLV*20),persona,(20+randomLV*7)));
+				}
+				break;
+			}
+			break;
+		case 3: //상급 훈련장
+//			Monster(이름 , 랭크, 레벨, 공격력, 체력, 최대체력, 방어력, 경험치, 골드, 성격, 점수)
+			for(int i=1; i<=randomDice; i++) {
+				monsterTemplate = (int) (Math.random() *3+1);
+				switch(monsterTemplate) {
+				case 1:
+					randomLV = (int)(Math.random()*7+5);
+					persona = MonsterPersona.persona();
+					group.add(new Monster("골렘","D",randomLV,(10+randomLV*2),(50+randomLV*17),(50+randomLV*17),10,10,(50+randomLV*10),(30+randomLV*35),persona,(17+randomLV*3)));
+				case 2:
+					randomLV = (int)(Math.random()*7+6);
+					persona = MonsterPersona.persona();
+					group.add(new Monster("페어리","D",randomLV,(15+randomLV*4),(30+randomLV*16),(30+randomLV*16),-3,5,(35+randomLV*12),(35+randomLV*27),persona,(17+randomLV*5)));
+				case 3:
+					randomLV = (int)(Math.random()*5+10);
+					persona = MonsterPersona.persona();
+					group.add(new Monster("트롤","D",randomLV,(8+randomLV*3),(50+randomLV*18),(50+randomLV*18),1,0,(60+randomLV*11),(40+randomLV*18),persona,(19+randomLV*4)));
+				}
+				break;
+			}
+			break;
+		default:
+			Cw.wn();
+			Cw.wn("주변에 아무것도 없습니다.");
+			action.actionrun();
+			break;
+		}
+	}
+}

@@ -1,0 +1,32 @@
+package com.peisia.c.webBlogV1;
+
+import com.peisia.c.util.Ci;
+import com.peisia.c.util.Cw;
+import com.peisia.c.webBlog.data.Data;
+
+public class ProcMenuDel {
+	public static void run() {
+		 Cw.wn("게시글 삭제 입니다.");
+	     String cmd = Ci.r("삭제 할 글번호를 입력하세요:");
+
+	     int tempSearchIndex = -1;
+	     for (int i = 0; i < Data.post.size(); i++) {
+	    	 if (cmd.equals(Data.post.get(i).instanceNo + "")) {
+	    		 tempSearchIndex = i;
+	    		 break;  // 찾았으면 반복문 종료
+	            	}
+	        	}
+
+	     if (tempSearchIndex >= 0 && tempSearchIndex < Data.post.size()) {
+	    	 Data.post.remove(tempSearchIndex);
+	    	 
+	    	 // 삭제된 후에 빈 자리에 뒤에 있는 요소들을 당김
+	    	 for (int j = tempSearchIndex; j < Data.post.size(); j++) {
+	    		 Data.post.set(j, Data.post.get(j + 1));
+	         	}	
+	    	 Cw.wn("글 수: " + Data.post.size());
+	        	} else {
+	            System.out.println("유효하지 않는 인덱스입니다.");
+	        }
+	}
+}

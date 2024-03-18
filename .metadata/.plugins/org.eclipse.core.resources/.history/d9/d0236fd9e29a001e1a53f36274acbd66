@@ -1,0 +1,15 @@
+package com.pay.catclass.c.jav;
+
+public class Main {
+	public static void main(String[] args) {
+		Cat kitty = new Cat("키티", 10, "식빵굽기");
+		
+		Cat way = new Cat("웨이" , 5);
+		
+		Cat hi = new Cat();
+		
+		System.out.println(kitty);
+		System.out.println(way);
+		System.out.println(hi);
+	}
+}

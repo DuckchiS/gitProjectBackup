@@ -1,0 +1,31 @@
+package com.peisia.util.kiosk;
+
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		System.out.println("============================================");
+		System.out.println("================= 고양이카페       ===========");
+		System.out.println("============================================");
+		
+		Scanner sc = new Scanner(System.in);
+		String cmd;
+		
+		loop_a:
+			while(true) {
+				System.out.println("주문을 입력하세요.");
+				cmd = sc.next();
+				switch (cmd) {
+				case "1":
+					System.out.println("1번 주문");
+					break;
+				case "2":
+					System.out.println("2번 주문");
+					break;
+				case "x":
+					break loop_a;
+				}	
+			}
+		System.out.println("프로그램을 종료합니다.");
+	}
+}

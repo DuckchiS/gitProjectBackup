@@ -1,0 +1,15 @@
+package com.peisia.c.KioskV3;
+
+public class ProcMenuTumbler {
+	public static void run() {
+		System.out.println("========================================");
+		System.out.println("============= 텀블러&피규어 리스트    =======");
+		System.out.println("========================================");
+		
+		loop_c:
+		while(true) {
+			
+		}
+		
+	}
+}

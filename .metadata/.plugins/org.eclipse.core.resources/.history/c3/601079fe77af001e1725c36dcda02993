@@ -1,0 +1,104 @@
+package com.peisia.c.dargers;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+import com.peisia.c.dargers.display.Display;
+
+public class ProcDargers {
+	Connection con = null;
+	Statement st = null;
+	ResultSet result = null;
+	void run() {
+		dbInit();
+		Display.showTitle();
+		Display.showMainMenu();
+		System.out.println("================================================================");
+		Scanner sc = new Scanner(System.in);
+		
+		loop:
+		while(true) {
+			System.out.println("옵션을 선택하세요:");
+			String cmd = sc.next();
+			switch(cmd) {
+			case "1":
+				System.out.println("============================================");
+				System.out.println("================= 선수리스트 ==================");
+				System.out.println("============================================");
+				System.out.println("이름 생년월일 번호 포지션 부상");
+				try {
+					result = st.executeQuery("select * from la_dargers");
+					while(result.next()) {
+						String name = result.getString("p_name");
+						String birth = result.getString("p_birth");
+						String no = result.getString("p_number");
+						String position = result.getString("p_position");
+						String injury = result.getString("injury");
+					}
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				break;
+			case "2":
+				break;
+			case "3":
+				break;
+			case "4":
+				break;
+			case "5":
+				break;
+			case "e":
+				System.out.println("프로그램을 종료합니다.");
+				break loop;
+			default:
+				System.out.println("옵션에 없습니다. 다시 입력하세요.");
+				break;
+			}
+		}
+	}
+	
+	private void dbInit() {
+		try {
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/board", "root", "root");
+			st = con.createStatement();
+		} catch(SQLException e) {
+			System.out.println("SQLException: " + e.getMessage());
+			System.out.println("SQLState: " + e.getSQLState());
+		}
+	}
+	private void dbExcuteQuery(String query) {
+		try {
+			result = st.executeQuery(query);
+			while(result.next()) {
+				String name = result.getString("p_name");
+				System.out.println(name);
+			}
+		} catch(SQLException e){
+			System.out.println("SQLException: " + e.getMessage());
+			System.out.println("SQLState: " + e.getSQLState());
+		}
+	}
+	private void dbExcuteUpdate(String query) {
+		try {
+			int resultCount = st.executeUpdate(query);
+			System.out.println("처리된 행 수:" + resultCount);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	private void dbPostCount() {
+		try {
+			result = st.executeQuery("select count(*) from la_dargers");
+			result.next();
+			String count = result.getString("count(*)");
+			System.out.println("선수 수: " + count);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
+

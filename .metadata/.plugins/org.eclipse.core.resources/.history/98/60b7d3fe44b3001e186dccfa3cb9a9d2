@@ -1,0 +1,10 @@
+package com.peisia.c.board.member;
+
+public class ProcMemberLogin {
+	public static String run() {
+		System.out.println("======== [로그인] =========");
+		String id = "";
+		String pw = "";
+		return id;
+	}
+}

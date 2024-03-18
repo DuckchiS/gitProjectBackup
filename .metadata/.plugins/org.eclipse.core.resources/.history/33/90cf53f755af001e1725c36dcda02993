@@ -1,0 +1,108 @@
+package com.peisia.c.board;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+import com.peisia.c.board.display.Display;
+
+public class ProcBoard {
+	Connection con = null;
+	Statement st = null;
+	ResultSet result = null;
+	
+	void run() {
+		Display.showTitle();
+		Display.showMainMenu();
+		dbInit();
+//		dbExecuteQuery("select * from tottenham_squad where p_number=7");
+
+		Scanner sc = new Scanner(System.in);
+		
+		loop:
+		while(true) {
+			System.out.println("옵션을 선택하세요: ");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			String cmd = sc.next();
+			switch (cmd) {
+			case "1":
+				
+				break;
+			case "2":
+				System.out.println("읽을 글번호를 입력하세요: ");
+				String readNo = sc.next();
+				String sql1 = "select * from javaboard where no=" + readNo;
+				dbExecuteQuery(sql1);
+				break;
+			case "3":
+				try {
+					System.out.println("글제목을 입력해주세요:");
+					String title = sc.next();
+					System.out.println("글내용을 입력해주세요:");
+					String content = reader.readLine();
+					System.out.println("작성자 ID를 적어주세요:");
+					String id = reader.readLine();
+					
+					dbExecuteUpdate("insert into javaboard (b_title,b_id,b_text,b_date,b_hit) values ('"+ title +"','"+id+"','"+content+"',now(),0);");
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+				break;
+			case "4":
+				System.out.println("삭제할 글번호를 입력하세요: ");
+				String delNo = sc.next();
+				String sql = "delete from javaboard where no="+delNo;
+				dbExecuteUpdate(sql);
+				break;
+			case "0":
+				
+				break;
+			case "e":
+				System.out.println("시스템을 종료합니다.");
+				break loop;
+			default:
+				System.out.println("옵션에 없습니다. 다시 입력하세요.");
+				break;
+			}
+		}
+	}
+	
+	private void dbInit() {
+		try {
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/board", "root", "root");
+			st = con.createStatement();	// Statement는 정적 SQL문을 실행하고 결과를 반환받기 위한 객체다. Statement하나당 한개의 ResultSet 객체만을 열 수있다.
+		} catch (SQLException e) {
+			System.out.println("SQLException: " + e.getMessage());
+			System.out.println("SQLState: " + e.getSQLState());
+		}
+	}
+	
+	private void dbExecuteQuery(String query) {
+		try {
+			result = st.executeQuery(query);
+			while (result.next()) {	// 결과를 하나씩 빼기. 더 이상 없으면(행 수가 끝나면) false 리턴됨.
+				String name = result.getString("p_name");	// p_name 필드(열) 의 데이터 꺼내기(1개 꺼낸거에서)
+				System.out.println(name);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQLException: " + e.getMessage());
+			System.out.println("SQLState: " + e.getSQLState());
+		}
+	}	
+	private void dbExecuteUpdate(String query) {
+		try {
+			int resultCount = st.executeUpdate(query);
+			System.out.println("처리된 행 수:"+resultCount);
+		} catch (SQLException e) {
+			e.printStackTrace();
+//			System.out.println("SQLException: " + e.getMessage());
+//			System.out.println("SQLState: " + e.getSQLState());
+		}
+	}	
+}

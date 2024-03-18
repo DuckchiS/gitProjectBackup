@@ -1,0 +1,29 @@
+package com.peisia.c.webBlogV1;
+
+import com.peisia.c.util.Ci;
+import com.peisia.c.util.Cw;
+import com.peisia.c.webBlog.display.Display;
+
+public class ProcMenu {
+	public static void run() {
+		Display.menuMain();
+		loop:while(true) {
+			String cmd = Ci.r();
+			switch(cmd) {
+				case "1":
+					break;
+				case "2":
+					break;
+				case "3":
+					break;
+				case "4":
+					break;
+				case "5":
+					break;
+				default:
+					Cw.wn("옵션에 없습니다. 다시 입력하세요.");
+					break;
+			}
+		}
+	}
+}

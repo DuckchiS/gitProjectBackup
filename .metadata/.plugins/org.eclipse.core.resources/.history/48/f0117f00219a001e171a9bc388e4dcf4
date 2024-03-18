@@ -1,0 +1,17 @@
+package com.pay.java.rpc;
+
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		System.out.println("가위 바위 보를 입력하세요.");
+		
+		Scanner sc = new Scanner(System.in);
+		String cmd = sc.next();
+		System.out.println("당신이 낸 것은: " + cmd);
+		
+		//int r = (int)(Math.random() * n + 1); 1 ~ n까지 랜덤한 숫자를 뽑는다.
+		int r = (int)(Math.random() * 6 + 1);    
+		System.out.println("주사위 눈은: " + r);
+	}
+}

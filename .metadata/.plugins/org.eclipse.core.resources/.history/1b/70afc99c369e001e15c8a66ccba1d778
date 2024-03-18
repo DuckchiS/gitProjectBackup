@@ -1,0 +1,39 @@
+package com.peisia.c.KioskV3;
+
+public class ProcMenuDrink {
+	public static void run() {
+		loop_b:
+		while(true) {
+			System.out.println("==================================");
+			System.out.println("============= 음료 리스트    =======");
+			System.out.println("==================================");
+			
+			System.out.println("=======음료를 주문하세요.=======");
+			KioskObj.cmd = KioskObj.sc.next();
+			switch (KioskObj.cmd) {
+			case "1":
+				System.out.println("아아를 주문했습니다.");
+				KioskObj.basket.add(Kiosk.p1);
+				break;
+			case "2":
+				System.out.println("뜨아를 주문했습니다.");
+				KioskObj.basket.add(Kiosk.p2);
+				break;
+			case "3":
+				System.out.println("바닐라라떼를 주문했습니다.");
+				KioskObj.basket.add(Kiosk.p3);
+				break;
+			case "4":
+				System.out.println("초코라떼를 주문했습니다.");
+				KioskObj.basket.add(Kiosk.p4);
+				break;
+			case "x":
+				System.out.println("초기 화면으로 갑니다.");
+				break loop_b;
+			default:
+				System.out.println("옵션에 없습니다. 다시 해주세요.");
+				break;
+			}
+		}
+	}
+}

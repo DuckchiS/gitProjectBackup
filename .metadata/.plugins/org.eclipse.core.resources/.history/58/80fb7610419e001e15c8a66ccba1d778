@@ -1,0 +1,27 @@
+package com.peisia.c.KioskV3;
+
+public class ProcMenuOptionBHotCold {
+	public static void run() {
+		loop:
+			while(true) {
+				System.out.println("[1.hot/2.cold/x.이전메뉴로]");
+				KioskObj.cmd = KioskObj.sc.next();
+				switch (KioskObj.cmd) {
+				case "1":
+					System.out.println("hot 선택됨. 이전 메뉴 이동");
+					KioskObj.basket.add(new Order(KioskObj.product.get(2),1));	//오더 추가
+					break loop;
+				case "2":
+					System.out.println("ice 선택됨. 이전 메뉴 이동");
+					KioskObj.basket.add(new Order(KioskObj.product.get(2),2));	//오더 추가
+					break loop;
+				case "x":
+					System.out.println("이전 메뉴 이동");
+					break loop;
+				default:
+					System.out.println("옵션에 없습니다.");
+					break;
+				}
+			}
+	}
+}

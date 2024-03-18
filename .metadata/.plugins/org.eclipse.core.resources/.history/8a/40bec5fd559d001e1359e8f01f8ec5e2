@@ -1,0 +1,19 @@
+package com.peisia.util.javamemory;
+
+public class Main {
+	public static void main(String[] args) {
+		Cat kitty = new Cat();
+		kitty.age = 3;
+		
+		Cat yaongi;
+		
+		yaongi = kitty;
+		
+		yaongi.age = 4;
+		
+		
+		System.out.println(kitty.age);
+		System.out.println(yaongi.age);
+		System.out.println(3);
+	}
+}

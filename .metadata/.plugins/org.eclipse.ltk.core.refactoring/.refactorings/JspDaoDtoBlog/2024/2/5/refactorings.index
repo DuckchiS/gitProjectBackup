@@ -1,0 +1,34 @@
+1706754250719	Move compilation unit
+1706754275744	Move compilation unit
+1706754296689	Move compilation unit
+1706754301443	Move compilation unit
+1706754307579	Delete element
+1706754310809	Delete element
+1706754314973	Delete element
+1706754323331	Delete element
+1706755607445	Delete element
+1706755611993	Delete element
+1706757760069	Delete element
+1706764898294	Delete element
+1706766539882	Move 'list.jsp' to 'webapp'
+1706766577886	Move 'write.jsp' to 'webapp'
+1706766579588	Move 'editProc.jsp' to 'webapp'
+1706766580945	Move 'edit.jsp' to 'webapp'
+1706766582097	Move 'read.jsp' to 'webapp'
+1706766584968	Delete element
+1706766588088	Move 'login.jsp' to 'webapp'
+1706766589304	Move 'proc_login.jsp' to 'webapp'
+1706766590649	Move 'proc_signup.jsp' to 'webapp'
+1706766591944	Move 'signup.jsp' to 'webapp'
+1706766593605	Delete element
+1706843176898	Delete element
+1706843223318	Move compilation unit
+1706843303102	Move compilation unit
+1706843326925	Move compilation unit
+1706843346181	Move compilation unit
+1706843372431	Move compilation unit
+1706843394008	Rename type 'Dao'
+1706843419607	Rename type 'Da'
+1706843707622	Delete element
+1706843714409	Move compilation unit
+1706843723140	Rename type 'ServletController'

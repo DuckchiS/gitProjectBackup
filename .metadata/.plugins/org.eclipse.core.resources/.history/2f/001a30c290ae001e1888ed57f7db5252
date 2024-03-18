@@ -1,0 +1,67 @@
+package Main;
+
+import Data.Create;
+import Data.MapData;
+import Util.Ci;
+import Util.Cw;
+
+public class ActionMove {
+	
+	public static void moveRun() {
+		MapData.mapList.get(Create.playerSerialNumber).mapInfo();
+		w:while(true) {
+			Cw.wn();
+			Cw.wn("[    ▲위로        ]");
+			Cw.wn("[◀후진 / 전진▶/ 메뉴]");
+			Cw.wn("[    ▼아래        ]");
+			Cw.wn();
+			
+			String cmd = Ci.r("행동입력");
+			switch(cmd) {
+			case "위로":
+				if (MapData.checkingPlayerMap(0))
+				break;
+			}
+			
+			
+			
+//			switch(cmd) {
+//			case "위로":
+//				 if(MapData.checkingPlayerMap(Create.playerMap - MapData.mapList.get(Create.playerMap).top)) {
+//		                Create.playerMap -= MapData.mapList.get(Create.playerMap).top;
+//		                Cw.wn("위로 이동했습니다.");
+//		                MapData.mapList.get(Create.playerMap).mapInfo();
+//		            } else {
+//		                Cw.wn("더 이상 위로 이동할 수 없습니다.");
+//		                MapData.mapList.get(Create.playerMap).mapInfo();
+//		            }
+//				 break;
+//			case "전진":
+//				Create.playerMap++;
+//				if(MapData.checkingPlayerMap(Create.playerMap)) {
+//					Cw.wn("앞으로 한칸 진행했습니다.");
+//					MapData.mapList.get(Create.playerMap).mapInfo();
+//				}else {
+//					Create.playerMap--;
+//					Cw.wn("막혀있습니다.");
+//					MapData.mapList.get(Create.playerMap).mapInfo();
+//				}
+//				break;
+//			case "후진":
+//				Create.playerMap--;
+//				if(MapData.checkingPlayerMap(Create.playerMap)) {
+//					Cw.wn("뒤로 한칸 진행했습니다.");
+//					MapData.mapList.get(Create.playerMap).mapInfo();
+//				}else {
+//					Create.playerMap++;
+//					Cw.wn("막혀있습니다.");
+//					MapData.mapList.get(Create.playerMap).mapInfo();
+//				}
+//				break;
+//			case "메뉴":
+//				break w;
+//			}
+		}
+	}
+
+}

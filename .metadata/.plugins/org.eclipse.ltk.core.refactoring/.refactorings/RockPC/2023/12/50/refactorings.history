@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;cmd&apos; in &apos;com.pay.java.rpc.Main.main(...)&apos; to &apos;userRpc&apos;&#x0D;&#x0A;- Original project: &apos;RockPC&apos;&#x0D;&#x0A;- Original element: &apos;com.pay.java.rpc.Main.main(String[]).cmd&apos;&#x0D;&#x0A;- Renamed element: &apos;cmd&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;cmd&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;com.pay.java.rpc{Main.java[Main~main~\[QString;@cmd!210!232!217!219!QString;!0!false" name="userRpc" references="true" stamp="1702517878901" version="1.0"/>
+</session>

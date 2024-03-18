@@ -1,0 +1,7 @@
+package com.peisia.c.board.shop;
+
+public class ProcS_Delete {
+	public static void run() {
+		
+	}
+}

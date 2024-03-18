@@ -45,7 +45,7 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class FcController{
 	
-	private final String API_KEY = "test_d101652904df6b58ef540a48653d7217d23ee7ea22014742e2004f28b02dad90b11206025f65fce822c9f5402cb8b869";
+	private final String API_KEY = "";
 	private final String rank = "https://open.api.nexon.com/static/fconline/meta/division.json";
 	@GetMapping("/fc")
 	public void fcOnline() {

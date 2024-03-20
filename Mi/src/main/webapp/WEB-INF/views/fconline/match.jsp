@@ -22,7 +22,7 @@
 <a href="/">처음으로 가기</a>
 <hr>
 유저: ${serverName}
-<form action="/fconline/match" method="post">
+<form action="/fconline/match" method="get">
 	<input name="word">
     <input type="submit" value="검색">
 </form>

@@ -17,7 +17,14 @@
 	<%
 		String previousPage = (String) session.getAttribute("previousPage");
 	%>
-    <a href="${sessionScope.previousPage}">이전화면으로 가기</a>
+	<form id="previousPageForm" action="match" method="post">
+	    <!-- 세션에 저장된 이전 페이지의 URL을 폼 필드에 추가합니다. -->
+	    <input type="hidden" name="previousPage" value="${previousPage}">
+	    <!-- 필요한 경우 추가 데이터를 세션에 저장하여 전송할 수 있습니다. -->
+	    <input type="hidden" name="additionalData" value="value">
+	    <!-- 이전 화면으로 이동하는 버튼을 추가합니다. -->
+	    <button type="submit">이전화면으로 가기</button>
+	</form>
     <hr>
     
     <%-- tests 모델에 있는 JSON 데이터를 파싱하여 정보를 뽑아냅니다. --%>

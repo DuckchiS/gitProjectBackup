@@ -24,8 +24,9 @@
 <a href="/fconline/fc">FC온라인 유저확인</a>
 <hr>
 <a href="/fconline/match">FC온라인 전적확인</a>
-<a href="/fconline/user">FC온라인 테스트</a>
+<a href="https://fconline.nexon.com/datacenter/squadmaker">스쿼드 만들러 가기</a>
 <hr>
+<a href="/fconline/user">FC온라인 테스트</a>
 <a href="${cp}/ajax/testapi">test api</a>
 <a href="${cp}/api/catOne">고양이1</a>
 <a href="${cp}/api/catTwo">고양이2</a>

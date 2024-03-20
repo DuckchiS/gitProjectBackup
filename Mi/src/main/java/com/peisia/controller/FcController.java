@@ -1,6 +1,7 @@
 package com.peisia.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,19 +37,27 @@ public class FcController{
 	}
 	
 	@RequestMapping(value="/match", method=RequestMethod.GET)
-	public void match() {
-		
-	}
-	
-	@RequestMapping(value="/match", method=RequestMethod.POST)
-	public String match(Model model, String word,HttpServletRequest request) {
+	public String match(Model model, String word,
+			HttpServletRequest request) {
 		try {	        
 			fcService.match(model, word, request);
 		} catch (Exception exception) {
 		    System.out.println(exception);
+		    exception.printStackTrace();
 		}
 		return "/fconline/match";
 	}
+	
+//	@RequestMapping(value="/match", method=RequestMethod.POST)
+//	public String match(Model model, String word,
+//			HttpServletRequest request) {
+//		try {	        
+//			fcService.match(model, word, request);
+//		} catch (Exception exception) {
+//		    System.out.println(exception);
+//		}
+//		return "/fconline/match";
+//	}
 	
 	@RequestMapping(value="/matchDetail", method=RequestMethod.GET)
 	public String matchDetail(@RequestParam("jsonData") String jsonData,

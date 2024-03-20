@@ -21,6 +21,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 
 @Service
@@ -67,7 +68,7 @@ public class FcService {
 	
 	public String baseUser(Model model,String word) {
 		try {
-			  String dataFromFirstApi = parseFirstApiResponse(ouid(word));
+			  	String dataFromFirstApi = parseFirstApiResponse(ouid(word));
 	            model.addAttribute("ouid", dataFromFirstApi);
 	            
 		        String characterName2 = URLEncoder.encode(dataFromFirstApi, StandardCharsets.UTF_8);
@@ -116,12 +117,9 @@ public class FcService {
 	
 	public void user(Model model, String word) {
 		try {
-			ouid(word);
 			   // 첫 번째 API 응답을 파싱하여 필요한 데이터 추출
-            String dataFromFirstApi = parseFirstApiResponse(ouid(word));
+            String dataFromFirstApi = parseFirstApiResponse(baseUser(model, word));
             model.addAttribute("ouid", dataFromFirstApi);
-            
-            baseUser(model, word);
             
 		    String characterName3 = URLEncoder.encode(dataFromFirstApi, StandardCharsets.UTF_8);
 
@@ -222,11 +220,8 @@ public class FcService {
 	
 	public void match(Model model, String word,HttpServletRequest request) {
 		try {
-			ouid(word);
-		    String dataFromFirstApi = parseFirstApiResponse(ouid(word));
-		    model.addAttribute("ouid", dataFromFirstApi);
+		    String dataFromFirstApi = parseFirstApiResponse(baseUser(model, word));
 		    
-		    baseUser(model, word);
 		    
 		    String characterName = URLEncoder.encode(dataFromFirstApi, StandardCharsets.UTF_8);
 		    String urlString = "https://open.api.nexon.com/fconline/v1/user/match?ouid="+ characterName +"&matchtype=50&offset=0&limit=100";
@@ -255,64 +250,80 @@ public class FcService {
 		    }
 		    in.close();
 		    
-			HttpSession session = request.getSession();
-			session.setAttribute("previousPage", "/fconline/match");
-		    
+		    Gson gson = new Gson();
+		    // JSON 문자열로 변환
+		    String jsonResponse = response.toString();
+		    JsonArray jsonArray = gson.fromJson(jsonResponse, JsonArray.class);
+			
 			// JSON 배열 데이터를 문자열로 변환하여 모델에 추가
-		    model.addAttribute("matches", response.toString());
+		    model.addAttribute("matches", jsonArray);
 	        model.addAttribute("ouid", dataFromFirstApi);
-	        model.addAttribute("matches", response.toString());
-		    System.out.println(response.toString());
+		    System.out.println(jsonArray);
+
+		    HttpSession session = request.getSession();
+		    session.setAttribute("previousPage", "/fconline/match");
+		    // 경기 정보에서 경기 ID 추출
+		    // 주어진 문자열이 JSON 배열인지 확인하고 처리
+		    try {
+		    	JsonArray matchArray = JsonParser.parseString(response.toString()).getAsJsonArray();
+		    	if (matchArray.size() > 0) {
+		    		JsonObject firstMatch = matchArray.get(0).getAsJsonObject();
+		    		String matchId = firstMatch.get("matchId").getAsString();
+		    		
+		    		// 추출한 경기 ID와 검색어를 이용하여 matchDetail() 메소드 호출
+		    		matchDetail(matchId, word, model, request);
+		    	}
+		    } catch (JsonSyntaxException e) {
+		    	// 주어진 문자열이 유효한 JSON 배열이 아닌 경우
+		    	e.printStackTrace();
+		    	// 예외 처리를 진행하거나 로그를 출력하거나 필요한 작업을 수행합니다.
+		    }
+
 		} catch(Exception e) {
 			System.out.println(e);
+			e.printStackTrace();
 		}	
 	}
 	
 	public void matchDetail(@RequestParam("jsonData") String jsonData,
 			@RequestParam("word")String word, Model model,HttpServletRequest request) {
-		try {
-		    String urlString = "https://open.api.nexon.com/fconline/v1/match-detail?matchid=" + jsonData;
-		    URL url = new URL(urlString);
-		    
-		    // HTTP connection 설정
-		    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		    connection.setRequestMethod("GET");
-		    connection.setRequestProperty("x-nxopen-api-key", API_KEY);
+	   try {
+		String urlString = "https://open.api.nexon.com/fconline/v1/match-detail?matchid=" + jsonData;
+	    URL url = new URL(urlString);
+	    
+	    // HTTP connection 설정
+	    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+	    connection.setRequestMethod("GET");
+	    connection.setRequestProperty("x-nxopen-api-key", API_KEY);
 
-		    int responseCode = connection.getResponseCode();
+	    int responseCode = connection.getResponseCode();
 
-		    BufferedReader in;
-		    if (responseCode == 200) {
-		        // responseCode 200 정상응답
-		        in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		    } else {
-		        // responseCode 200 이외의 코드가 반환되었을 경우
-		        in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
-		    }
+	    BufferedReader in;
+	    if (responseCode == 200) {
+	        // responseCode 200 정상응답
+	        in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+	    } else {
+	        // responseCode 200 이외의 코드가 반환되었을 경우
+	        in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+	    }
 
-		    String inputLine;
-		    StringBuffer response = new StringBuffer();
-		    while ((inputLine = in.readLine()) != null) {
-		        response.append(inputLine);
-		    }
-		    in.close();
-		    
-		    ouid(word);
-		        
-		    // 첫 번째 API 응답을 파싱하여 필요한 데이터 추출
-		    String dataFromFirstApi = parseFirstApiResponse(ouid(word));
-		    model.addAttribute("ouid", dataFromFirstApi);
-		        
-		    baseUser(model, word);
+	    String inputLine;
+	    StringBuffer response = new StringBuffer();
+	    while ((inputLine = in.readLine()) != null) {
+	        response.append(inputLine);
+	    }
+	    in.close();
+	    		    
+	    // 첫 번째 API 응답을 파싱하여 필요한 데이터 추출
+	    String dataFromFirstApi = parseFirstApiResponse(ouid(word));
+	    model.addAttribute("ouid", dataFromFirstApi);
+        model.addAttribute("matches", response.toString());
+	    model.addAttribute("tests", response.toString());
 
-	        model.addAttribute("ouid", dataFromFirstApi);
-	        model.addAttribute("matches", response.toString());
-	        
-		    model.addAttribute("tests", response.toString());
-
-		    System.out.println(response.toString());
+	    System.out.println(response.toString());
 		} catch(Exception e) {
 			System.out.println(e);
+			e.printStackTrace();
 		}	
 	}
 	

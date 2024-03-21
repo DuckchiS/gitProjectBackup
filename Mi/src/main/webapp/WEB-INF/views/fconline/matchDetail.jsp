@@ -17,9 +17,10 @@
 	<%
 		String previousPage = (String) session.getAttribute("previousPage");
 	%>
-	<form id="previousPageForm" action="match" method="post">
+	<form id="previousPageForm" action="match" method="get">
 	    <!-- 세션에 저장된 이전 페이지의 URL을 폼 필드에 추가합니다. -->
 	    <input type="hidden" name="previousPage" value="${previousPage}">
+	    <input type="hidden" name="word" value="${word}">
 	    <!-- 필요한 경우 추가 데이터를 세션에 저장하여 전송할 수 있습니다. -->
 	    <input type="hidden" name="additionalData" value="value">
 	    <!-- 이전 화면으로 이동하는 버튼을 추가합니다. -->

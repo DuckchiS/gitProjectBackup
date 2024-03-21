@@ -258,9 +258,12 @@ public class FcService {
 			// JSON 배열 데이터를 문자열로 변환하여 모델에 추가
 		    model.addAttribute("matches", jsonArray);
 	        model.addAttribute("ouid", dataFromFirstApi);
-		    System.out.println(jsonArray);
+		    for (JsonElement element : jsonArray) {
+		        System.out.println(element);
+		    }
 
 		    HttpSession session = request.getSession();
+		    session.setAttribute("word", word);
 		    session.setAttribute("previousPage", "/fconline/match");
 		    // 경기 정보에서 경기 ID 추출
 		    // 주어진 문자열이 JSON 배열인지 확인하고 처리
@@ -276,6 +279,7 @@ public class FcService {
 		    } catch (JsonSyntaxException e) {
 		    	// 주어진 문자열이 유효한 JSON 배열이 아닌 경우
 		    	e.printStackTrace();
+		    	System.out.println(e);
 		    	// 예외 처리를 진행하거나 로그를 출력하거나 필요한 작업을 수행합니다.
 		    }
 

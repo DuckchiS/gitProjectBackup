@@ -1,4 +1,4 @@
-GitRepositoriesView.GitDirectories=C\:\\Users\\sdedu\\Documents\\workspace-sts-3.9.18.RELEASE\\.git;
-GitRepositoriesView.GitDirectories.relative=.git;
+GitRepositoriesView.GitDirectories=C\:\\Users\\sdedu\\git\\gitProjectBackup\\.git;C\:\\Users\\sdedu\\Documents\\workspace-sts-3.9.18.RELEASE\\.git;
+GitRepositoriesView.GitDirectories.relative=C\:\\Users\\sdedu\\git\\gitProjectBackup\\.git;.git;
 core_autoIgnoreDerivedResources=false
 eclipse.preferences.version=1

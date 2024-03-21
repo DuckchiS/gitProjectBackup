@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
     <fullyQualifiedTypeName name="com.example.dc.db.Dao"/>
     <fullyQualifiedTypeName name="com.example.dc.db.DB"/>
     <fullyQualifiedTypeName name="com.example.dc.jsp.member.dao.MemberDao"/>
@@ -36,8 +35,6 @@
     <fullyQualifiedTypeName name="org.springframework.http.HttpMethod"/>
     <fullyQualifiedTypeName name="com.peisia.spring.dto.FcOnlineDto"/>
     <fullyQualifiedTypeName name="java.io.BufferedReader"/>
-    <fullyQualifiedTypeName name="com.google.gson.Gson"/>
-    <fullyQualifiedTypeName name="com.google.gson.JsonObject"/>
     <fullyQualifiedTypeName name="com.google.gson.JsonParser"/>
     <fullyQualifiedTypeName name="com.google.gson.JsonArray"/>
     <fullyQualifiedTypeName name="com.google.gson.JsonElement"/>
@@ -60,4 +57,7 @@
     <fullyQualifiedTypeName name="java.lang.Exception"/>
     <fullyQualifiedTypeName name="com.peisia.service.FcService"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+    <fullyQualifiedTypeName name="com.google.gson.JsonSyntaxException"/>
+    <fullyQualifiedTypeName name="com.google.gson.Gson"/>
+    <fullyQualifiedTypeName name="com.google.gson.JsonObject"/>
 </qualifiedTypeNameHistroy>
